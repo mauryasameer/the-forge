@@ -12,4 +12,4 @@ Each file is self-contained with minimal dependencies — clone it, run it, see 
 
 ---
 
-[sameer-portfolio](https://github.com/mauryasameer/sameer-portfolio) · [sameermaurya.com](https://sameermaurya.com)
+[sameer-portfolio](https://github.com/mauryasameer/sameer-portfolio) · [mauryasameer.com](https://www.mauryasameer.com)
