@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "sameer-forge"
+version = "0.1.0"
+description = "Shared ML utilities — LLM providers, evaluation metrics, visualization, and report generation for Sameer Maurya's projects."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Sameer Maurya" }]
+keywords = ["machine-learning", "llm", "evaluation", "visualization"]
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "matplotlib>=3.8",
+    "scikit-learn>=1.4",
+]
+
+[project.optional-dependencies]
+llm = ["anthropic>=0.40", "openai>=1.55", "ollama>=0.3"]
+stats = ["statsmodels>=0.14"]
+nlp = ["nltk>=3.9"]
+imbalance = ["imbalanced-learn>=0.12"]
+all = [
+    "sameer-forge[llm]",
+    "sameer-forge[stats]",
+    "sameer-forge[nlp]",
+    "sameer-forge[imbalance]",
+    "pyarrow>=15",
+]
+dev = ["pytest>=8", "pytest-mock>=3.12", "ruff==0.11.13"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["forge*"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "UP", "B", "PIE", "PLC"]
+ignore = ["E501", "B008", "PIE790"]
+
+[tool.ruff.lint.per-file-ignores]
+"benchmarks/*" = ["PLC0415", "T201"]
+"tests/*"      = ["S101", "PLC0415"]
+"conftest.py"  = ["PLC0415"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"

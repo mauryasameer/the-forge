@@ -8,8 +8,9 @@ Run:          python kv_cache_benchmark.py
 """
 
 import time
-import numpy as np
+
 import matplotlib.pyplot as plt
+import numpy as np
 
 # GPT-2 Medium architecture
 N_HEADS  = 16
