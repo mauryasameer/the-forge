@@ -30,8 +30,6 @@ MAIN_FILES = {
 
 GITKEEP_FILES = {f"{d}/.gitkeep": (lambda name: "") for d in GITKEEP_DIRS}
 
-SKELETON_FILES = {**MAIN_FILES, **GITKEEP_FILES}
-
 RECOGNIZED_TOP_LEVEL = {
     "src",
     "tests",

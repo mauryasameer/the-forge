@@ -1,4 +1,4 @@
-from forge.scaffold.skeleton import create_tree, ensure_forge_dependency, retrofit_tree
+from forge.scaffold.skeleton import GITKEEP_DIRS, create_tree, ensure_forge_dependency, retrofit_tree
 
 EXPECTED_DIRS = [
     "src/core",
@@ -108,8 +108,7 @@ def test_gitkeep_files_excluded_from_result_symmetric(tmp_path):
     result1 = create_tree(root, "proj")
 
     # Verify .gitkeep files exist on disk
-    for rel_dir in ["src/core", "src/providers", "src/services", "src/utils",
-                    "tests/unit", "tests/integration", "tests/test_data", "scripts"]:
+    for rel_dir in GITKEEP_DIRS:
         assert (root / rel_dir / ".gitkeep").is_file(), f"{rel_dir}/.gitkeep should exist"
 
     # Verify .gitkeep files are NOT in result.created
@@ -124,8 +123,7 @@ def test_gitkeep_files_excluded_from_result_symmetric(tmp_path):
     result2 = retrofit_tree(root, "proj")
 
     # Verify .gitkeep files still exist on disk
-    for rel_dir in ["src/core", "src/providers", "src/services", "src/utils",
-                    "tests/unit", "tests/integration", "tests/test_data", "scripts"]:
+    for rel_dir in GITKEEP_DIRS:
         assert (root / rel_dir / ".gitkeep").is_file(), f"{rel_dir}/.gitkeep should still exist"
 
     # Verify .gitkeep files are NOT in result.created on second call
