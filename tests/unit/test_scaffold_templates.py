@@ -5,6 +5,7 @@ def test_pyproject_toml_includes_project_name():
     content = templates.pyproject_toml("my-project")
     assert 'name = "my-project"' in content
     assert 'target-version = "py311"' in content
+    assert 'build-backend = "setuptools.build_meta"' in content
 
 
 def test_ci_yml_pins_ruff_version():

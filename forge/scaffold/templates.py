@@ -1,7 +1,7 @@
 def pyproject_toml(project_name: str) -> str:
     return f'''[build-system]
 requires = ["setuptools>=69", "wheel"]
-build-backend = "setuptools.backends.legacy:build"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "{project_name}"
