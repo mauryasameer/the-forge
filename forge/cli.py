@@ -16,7 +16,11 @@ def cmd_new(args: argparse.Namespace) -> int:
         return 1
     result = create_tree(root, args.name)
     ensure_forge_dependency(root, forge.__version__)
-    subprocess.run(["git", "init"], cwd=root, check=True, capture_output=True)
+    try:
+        subprocess.run(["git", "init"], cwd=root, check=True, capture_output=True)
+    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
+        print(f"error: git init failed: {exc}", file=sys.stderr)
+        return 1
     print(f"created {len(result.created)} files/dirs in {root}")
     for path in result.created:
         print(f"  create {path.relative_to(root)}")
