@@ -74,6 +74,7 @@ def create_tree(root: Path, project_name: str) -> ScaffoldResult:
         file_path = root / rel_file
         file_path.parent.mkdir(parents=True, exist_ok=True)
         file_path.write_text(template_fn(project_name))
+        # .gitkeep files are written to disk but not tracked in result
     return result
 
 
@@ -96,11 +97,10 @@ def retrofit_tree(root: Path, project_name: str) -> ScaffoldResult:
             result.created.append(file_path)
     for rel_file, template_fn in GITKEEP_FILES.items():
         file_path = root / rel_file
-        if file_path.exists():
-            result.skipped.append(file_path)
-        else:
+        if not file_path.exists():
             file_path.parent.mkdir(parents=True, exist_ok=True)
             file_path.write_text(template_fn(project_name))
+        # .gitkeep files are written to disk but never tracked in result
     result.unrecognized = _find_unrecognized(root)
     return result
 

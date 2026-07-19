@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from forge.scaffold.skeleton import create_tree, ensure_forge_dependency, retrofit_tree
 
 EXPECTED_DIRS = [
@@ -101,3 +99,39 @@ def test_ensure_forge_dependency_noop_when_already_present(tmp_path):
     status = ensure_forge_dependency(tmp_path, "0.2.0")
 
     assert status == "unchanged"
+
+
+def test_gitkeep_files_excluded_from_result_symmetric(tmp_path):
+    root = tmp_path / "proj"
+
+    # First call: create tree from scratch
+    result1 = create_tree(root, "proj")
+
+    # Verify .gitkeep files exist on disk
+    for rel_dir in ["src/core", "src/providers", "src/services", "src/utils",
+                    "tests/unit", "tests/integration", "tests/test_data", "scripts"]:
+        assert (root / rel_dir / ".gitkeep").is_file(), f"{rel_dir}/.gitkeep should exist"
+
+    # Verify .gitkeep files are NOT in result.created
+    for path in result1.created:
+        assert not path.name == ".gitkeep", f".gitkeep should not be in created: {path}"
+
+    # Verify .gitkeep files are NOT in result.skipped
+    for path in result1.skipped:
+        assert not path.name == ".gitkeep", f".gitkeep should not be in skipped: {path}"
+
+    # Second call: retrofit tree (should be idempotent)
+    result2 = retrofit_tree(root, "proj")
+
+    # Verify .gitkeep files still exist on disk
+    for rel_dir in ["src/core", "src/providers", "src/services", "src/utils",
+                    "tests/unit", "tests/integration", "tests/test_data", "scripts"]:
+        assert (root / rel_dir / ".gitkeep").is_file(), f"{rel_dir}/.gitkeep should still exist"
+
+    # Verify .gitkeep files are NOT in result.created on second call
+    for path in result2.created:
+        assert not path.name == ".gitkeep", f".gitkeep should not be in created on retrofit: {path}"
+
+    # Verify .gitkeep files are NOT in result.skipped on second call (critical fix)
+    for path in result2.skipped:
+        assert not path.name == ".gitkeep", f".gitkeep should not be in skipped on retrofit: {path}"
