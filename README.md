@@ -1,6 +1,6 @@
 # The Forge
 
-![Version](https://img.shields.io/badge/version-0.1.0-c8a96e)
+![Version](https://img.shields.io/badge/version-0.2.0-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
@@ -9,13 +9,13 @@ Shared ML utilities — LLM providers, evaluation metrics, visualization, and re
 ## Install
 
 ```bash
-pip install git+https://github.com/mauryasameer/the-forge.git@v0.1.0
+pip install git+https://github.com/mauryasameer/the-forge.git@v0.2.0
 ```
 
 Or pin in `requirements.txt`:
 
 ```
-sameer-forge @ git+https://github.com/mauryasameer/the-forge.git@v0.1.0
+sameer-forge @ git+https://github.com/mauryasameer/the-forge.git@v0.2.0
 ```
 
 ## Modules
@@ -30,6 +30,28 @@ sameer-forge @ git+https://github.com/mauryasameer/the-forge.git@v0.1.0
 | `forge.data` | CSV/parquet loaders with schema validation, stratified + time splits, SMOTE |
 | `forge.report` | Self-contained dark-themed HTML model-card report builder |
 | `forge.logging` | One-call structured logger factory |
+
+## Scaffolding Projects
+
+Every project in the ecosystem follows the same PROJECT_STANDARDS.md layout and depends on
+`sameer-forge`. The `forge` CLI (installed alongside the package) generates or retrofits that
+layout:
+
+```bash
+# brand-new project
+forge new my-project --path ~/dev
+
+# retrofit an existing, non-empty directory — additive only, never overwrites
+cd ~/dev/my-existing-notebook-project
+forge init
+```
+
+`forge new` creates the full `src/{core,providers,services,utils,data}` + `tests/` + CI
+skeleton, pins `requirements.txt` to the current `sameer-forge` release, and runs `git init`.
+
+`forge init` fills in whatever's missing from that same layout without touching files that
+already exist, and reports any top-level files it doesn't recognize (e.g. notebooks) so you can
+move them into `src/` by hand.
 
 ## Quick Start
 
@@ -92,10 +114,12 @@ the-forge/
 │   ├── viz/            # Visualization utilities
 │   ├── data/           # Data loading, splitting, resampling
 │   ├── report/         # HTML report builder
+│   ├── scaffold/       # Project skeleton templates + create/retrofit logic
+│   ├── cli.py          # `forge new` / `forge init` command entry point
 │   └── logging.py      # Structured logger
 ├── benchmarks/         # Standalone ML benchmark scripts
 ├── tests/
-│   └── unit/           # 34 unit tests, zero external deps
+│   └── unit/           # 58 unit tests, zero external deps
 ├── pyproject.toml
 ├── requirements.txt
 └── VERSION

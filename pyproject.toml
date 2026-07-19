@@ -1,10 +1,10 @@
 [build-system]
 requires = ["setuptools>=69", "wheel"]
-build-backend = "setuptools.backends.legacy:build"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "sameer-forge"
-version = "0.1.0"
+version = "0.2.0"
 description = "Shared ML utilities — LLM providers, evaluation metrics, visualization, and report generation for Sameer Maurya's projects."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -23,6 +23,9 @@ dependencies = [
     "matplotlib>=3.8",
     "scikit-learn>=1.4",
 ]
+
+[project.scripts]
+forge = "forge.cli:main"
 
 [project.optional-dependencies]
 llm = ["anthropic>=0.40", "openai>=1.55", "ollama>=0.3"]

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.0] - 2026-07-20
+
+### Added
+- `forge new <name>` — CLI command scaffolding a fresh PROJECT_STANDARDS.md-compliant project (full `src/`/`tests/`/CI skeleton, pinned `sameer-forge` dependency, `git init`)
+- `forge init` — CLI command retrofitting that same layout onto an existing project directory, additive-only, reporting unrecognized top-level entries for manual triage
+- `forge.scaffold.templates` — project skeleton file templates
+- `forge.scaffold.skeleton` — tree creation/retrofit logic and `requirements.txt` dependency wiring
+- 21 new unit tests covering scaffold templates, skeleton logic, and the CLI (58 total)
+
+### Fixed
+- `build-backend` in `pyproject.toml` pointed at a non-importable module (`setuptools.backends.legacy:build`), breaking `pip install -e .` and `pip install git+...` for the whole package; corrected to `setuptools.build_meta`
+
 ## [0.1.0] - 2026-07-09
 
 ### Added
@@ -23,4 +35,5 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - CI workflow (ruff lint + pytest on Python 3.11 and 3.12)
 - Existing benchmark scripts moved to `benchmarks/`
 
+[0.2.0]: https://github.com/mauryasameer/the-forge/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/mauryasameer/the-forge/releases/tag/v0.1.0
