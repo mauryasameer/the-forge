@@ -31,6 +31,28 @@ sameer-forge @ git+https://github.com/mauryasameer/the-forge.git@v0.1.0
 | `forge.report` | Self-contained dark-themed HTML model-card report builder |
 | `forge.logging` | One-call structured logger factory |
 
+## Scaffolding Projects
+
+Every project in the ecosystem follows the same PROJECT_STANDARDS.md layout and depends on
+`sameer-forge`. The `forge` CLI (installed alongside the package) generates or retrofits that
+layout:
+
+```bash
+# brand-new project
+forge new my-project --path ~/dev
+
+# retrofit an existing, non-empty directory — additive only, never overwrites
+cd ~/dev/my-existing-notebook-project
+forge init
+```
+
+`forge new` creates the full `src/{core,providers,services,utils,data}` + `tests/` + CI
+skeleton, pins `requirements.txt` to the current `sameer-forge` release, and runs `git init`.
+
+`forge init` fills in whatever's missing from that same layout without touching files that
+already exist, and reports any top-level files it doesn't recognize (e.g. notebooks) so you can
+move them into `src/` by hand.
+
 ## Quick Start
 
 ```python
@@ -92,10 +114,12 @@ the-forge/
 │   ├── viz/            # Visualization utilities
 │   ├── data/           # Data loading, splitting, resampling
 │   ├── report/         # HTML report builder
+│   ├── scaffold/       # Project skeleton templates + create/retrofit logic
+│   ├── cli.py          # `forge new` / `forge init` command entry point
 │   └── logging.py      # Structured logger
 ├── benchmarks/         # Standalone ML benchmark scripts
 ├── tests/
-│   └── unit/           # 34 unit tests, zero external deps
+│   └── unit/           # 58 unit tests, zero external deps
 ├── pyproject.toml
 ├── requirements.txt
 └── VERSION
