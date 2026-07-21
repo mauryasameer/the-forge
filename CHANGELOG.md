@@ -3,6 +3,11 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.1] - 2026-07-21
+
+### Fixed
+- `forge new`/`forge init`'s generated `.github/workflows/ci.yml` only ran `pip install -r requirements.txt` in the test job, which does not include `pytest` — every scaffolded project's CI test job failed with `pytest: command not found`. Test job now installs `pytest==8.*` explicitly, mirroring the lint job's own explicit tool install.
+
 ## [0.2.0] - 2026-07-20
 
 ### Added
@@ -35,5 +40,6 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - CI workflow (ruff lint + pytest on Python 3.11 and 3.12)
 - Existing benchmark scripts moved to `benchmarks/`
 
+[0.2.1]: https://github.com/mauryasameer/the-forge/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/mauryasameer/the-forge/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/mauryasameer/the-forge/releases/tag/v0.1.0
