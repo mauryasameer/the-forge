@@ -15,6 +15,11 @@ def test_ci_yml_pins_ruff_version():
     assert "pytest tests/integration/" in content
 
 
+def test_ci_yml_installs_pytest_for_test_job():
+    content = templates.ci_yml()
+    assert "pip install -r requirements.txt pytest==8.*" in content
+
+
 def test_gitignore_ignores_src_data_contents():
     content = templates.gitignore()
     assert "src/data/*" in content
