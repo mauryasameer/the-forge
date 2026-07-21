@@ -1,6 +1,6 @@
 # The Forge
 
-![Version](https://img.shields.io/badge/version-0.2.0-c8a96e)
+![Version](https://img.shields.io/badge/version-0.2.1-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
@@ -9,13 +9,13 @@ Shared ML utilities — LLM providers, evaluation metrics, visualization, and re
 ## Install
 
 ```bash
-pip install git+https://github.com/mauryasameer/the-forge.git@v0.2.0
+pip install git+https://github.com/mauryasameer/the-forge.git@v0.2.1
 ```
 
 Or pin in `requirements.txt`:
 
 ```
-sameer-forge @ git+https://github.com/mauryasameer/the-forge.git@v0.2.0
+sameer-forge @ git+https://github.com/mauryasameer/the-forge.git@v0.2.1
 ```
 
 ## Modules
