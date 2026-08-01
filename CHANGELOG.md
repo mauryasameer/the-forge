@@ -3,6 +3,14 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.3.0] - 2026-08-01
+### Added
+- `forge.vision` module: `get_device()` (CUDA/MPS/CPU auto-detection), `ImageFolderDataset`
+  with normalize/denormalize helpers, `plot_translation_grid()` for labeled before/after
+  image comparisons. New `vision` optional-dependency extra (`torch`, `torchvision`, `pillow`).
+
+[0.3.0]: https://github.com/mauryasameer/the-forge/compare/v0.2.1...v0.3.0
+
 ## [0.2.1] - 2026-07-21
 
 ### Fixed
