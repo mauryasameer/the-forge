@@ -32,11 +32,13 @@ llm = ["anthropic>=0.40", "openai>=1.55", "ollama>=0.3"]
 stats = ["statsmodels>=0.14"]
 nlp = ["nltk>=3.9"]
 imbalance = ["imbalanced-learn>=0.12"]
+vision = ["torch>=2.2", "torchvision>=0.17", "pillow>=10.2"]
 all = [
     "sameer-forge[llm]",
     "sameer-forge[stats]",
     "sameer-forge[nlp]",
     "sameer-forge[imbalance]",
+    "sameer-forge[vision]",
     "pyarrow>=15",
 ]
 dev = ["pytest>=8", "pytest-mock>=3.12", "ruff==0.11.13"]
