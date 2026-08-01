@@ -16,7 +16,7 @@ def plot_translation_grid(rows: list[tuple[str, torch.Tensor]]) -> plt.Figure:
     fig, axes = plt.subplots(1, len(rows), figsize=(4 * len(rows), 4))
     if len(rows) == 1:
         axes = [axes]
-    for ax, (label, tensor) in zip(axes, rows):
+    for ax, (label, tensor) in zip(axes, rows, strict=True):
         image = denormalize(tensor).permute(1, 2, 0).detach().cpu().numpy()
         ax.imshow(image)
         ax.set_title(label)
