@@ -3,6 +3,12 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.5.3] - 2026-08-26
+### Fixed
+- `forge.vision`'s package `__init__` and `gridplot._to_display_array` eagerly imported torch/torchvision even for pure-numpy callers, forcing torch's CUDA/triton native libraries to load. Loading torch alongside TensorFlow in the same process (as a TF-based project using only `gridplot`'s numpy path does) segfaults on Linux. Both now defer the torch import until a `torch.Tensor` input actually needs it.
+
+[0.5.3]: https://github.com/mauryasameer/the-forge/compare/v0.5.2...v0.5.3
+
 ## [0.5.2] - 2026-08-26
 ### Fixed
 - Removed committed design specs and implementation plans (`docs/specs/`, `docs/plans/`) from the repo — these reveal the AI-assisted development process regardless of folder naming, against standing project rule.
