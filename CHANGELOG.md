@@ -3,6 +3,18 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.5.0] - 2026-08-26
+### Added
+- `LLMProvider.generate()` accepts an optional `images: list[bytes] | None` parameter (raw PNG
+  bytes) across all three providers (Claude, OpenAI, Ollama), each encoding into its own wire
+  format. Fully backward compatible. First unit tests ever written for these three providers.
+
+### Fixed
+- CI never installed `anthropic`/`openai`/`ollama`, so the new provider tests failed in CI (but
+  passed locally with the `llm` extra installed) until this was caught and fixed.
+
+[0.5.0]: https://github.com/mauryasameer/the-forge/compare/v0.4.0...v0.5.0
+
 ## [0.4.0] - 2026-08-26
 ### Added
 - `forge.vision.gridplot.plot_translation_grid()` now accepts `np.ndarray` images (channels-last
