@@ -1,16 +1,27 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import matplotlib.pyplot as plt
 import numpy as np
-import torch
 
-from forge.vision.dataset import denormalize
 from forge.viz.theme import apply_forge_theme
+
+if TYPE_CHECKING:
+    import torch
 
 
 def _to_display_array(image: torch.Tensor | np.ndarray) -> np.ndarray:
-    if isinstance(image, torch.Tensor):
-        return denormalize(image).permute(1, 2, 0).detach().cpu().numpy()
+    if not isinstance(image, np.ndarray):
+        # Lazy: importing torch/torchvision at module scope forces their CUDA/triton
+        # native libraries to load, which segfaults when a caller also has TensorFlow
+        # loaded in the same process (e.g. a TF-based project using only the numpy path).
+        import torch
+
+        from forge.vision.dataset import denormalize
+
+        if isinstance(image, torch.Tensor):
+            return denormalize(image).permute(1, 2, 0).detach().cpu().numpy()
     array = np.clip((np.asarray(image, dtype=np.float32) + 1.0) / 2.0, 0.0, 1.0)
     if array.ndim == 3 and array.shape[-1] == 1:
         array = array[..., 0]
