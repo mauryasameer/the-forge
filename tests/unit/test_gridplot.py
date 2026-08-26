@@ -1,3 +1,6 @@
+import subprocess
+import sys
+
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -45,3 +48,15 @@ def test_plot_translation_grid_accepts_mixed_torch_and_numpy_rows():
     ]
     fig = plot_translation_grid(rows)
     assert len(fig.axes) == 2
+
+
+def test_numpy_only_usage_does_not_import_torch():
+    script = (
+        "import sys\n"
+        "import numpy as np\n"
+        "from forge.vision.gridplot import plot_translation_grid\n"
+        "plot_translation_grid([('a', np.zeros((4, 4, 1), dtype=np.float32))])\n"
+        "assert 'torch' not in sys.modules, 'torch was imported for a numpy-only call'\n"
+    )
+    result = subprocess.run([sys.executable, "-c", script], capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
