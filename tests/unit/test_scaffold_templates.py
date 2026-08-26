@@ -4,8 +4,15 @@ from forge.scaffold import templates
 def test_pyproject_toml_includes_project_name():
     content = templates.pyproject_toml("my-project")
     assert 'name = "my-project"' in content
-    assert 'target-version = "py311"' in content
+    assert 'target-version = "py312"' in content
+    assert 'requires-python = ">=3.12"' in content
     assert 'build-backend = "setuptools.build_meta"' in content
+
+
+def test_ci_yml_uses_single_python_version_not_a_matrix():
+    content = templates.ci_yml()
+    assert "matrix" not in content
+    assert 'python-version: "3.12"' in content
 
 
 def test_ci_yml_pins_ruff_version():
