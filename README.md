@@ -1,6 +1,6 @@
 # The Forge
 
-![Version](https://img.shields.io/badge/version-0.5.2-c8a96e)
+![Version](https://img.shields.io/badge/version-0.5.3-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.12-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
