@@ -3,6 +3,12 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.5.2] - 2026-08-26
+### Fixed
+- Removed committed design specs and implementation plans (`docs/specs/`, `docs/plans/`) from the repo — these reveal the AI-assisted development process regardless of folder naming, against standing project rule.
+
+[0.5.2]: https://github.com/mauryasameer/the-forge/compare/v0.5.1...v0.5.2
+
 ## [0.5.1] - 2026-08-26
 ### Fixed
 - CI and the `forge new`/`forge init` scaffold's generated `ci.yml` both tested against a
