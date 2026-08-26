@@ -3,6 +3,15 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.5.1] - 2026-08-26
+### Fixed
+- CI and the `forge new`/`forge init` scaffold's generated `ci.yml` both tested against a
+  `["3.11", "3.12"]` Python version matrix, against explicit standing instruction to support
+  exactly one Python version. Both now test/lint Python 3.12 only. `requires-python` narrowed to
+  `>=3.12`, ruff `target-version` bumped to `py312`, README Python badge updated.
+
+[0.5.1]: https://github.com/mauryasameer/the-forge/compare/v0.5.0...v0.5.1
+
 ## [0.5.0] - 2026-08-26
 ### Added
 - `LLMProvider.generate()` accepts an optional `images: list[bytes] | None` parameter (raw PNG

@@ -4,15 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sameer-forge"
-version = "0.5.0"
+version = "0.5.1"
 description = "Shared ML utilities — LLM providers, evaluation metrics, visualization, and report generation for Sameer Maurya's projects."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 license = { text = "MIT" }
 authors = [{ name = "Sameer Maurya" }]
 keywords = ["machine-learning", "llm", "evaluation", "visualization"]
 classifiers = [
-    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "License :: OSI Approved :: MIT License",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
@@ -48,7 +47,7 @@ where = ["."]
 include = ["forge*"]
 
 [tool.ruff]
-target-version = "py311"
+target-version = "py312"
 line-length = 120
 
 [tool.ruff.lint]
