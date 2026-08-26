@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 
-from forge.llm.base import LLMProvider, LLMResponse
+from forge.llm.base import LLMProvider, LLMResponse, encode_image
 
 
 class OpenAIProvider(LLMProvider):
@@ -27,11 +27,25 @@ class OpenAIProvider(LLMProvider):
         self._model = model
         self._max_tokens = max_tokens
 
-    def generate(self, prompt: str, system: str | None = None, **kwargs) -> LLMResponse:
-        messages: list[dict[str, str]] = []
+    def generate(
+        self,
+        prompt: str,
+        system: str | None = None,
+        images: list[bytes] | None = None,
+        **kwargs,
+    ) -> LLMResponse:
+        messages: list[dict] = []
         if system:
             messages.append({"role": "system", "content": system})
-        messages.append({"role": "user", "content": prompt})
+        if images:
+            content: list[dict] = [{"type": "text", "text": prompt}]
+            content.extend(
+                {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{encode_image(img)}"}}
+                for img in images
+            )
+            messages.append({"role": "user", "content": content})
+        else:
+            messages.append({"role": "user", "content": prompt})
         return self.chat(messages, **kwargs)
 
     def chat(

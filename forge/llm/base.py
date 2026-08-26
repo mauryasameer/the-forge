@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
@@ -16,6 +17,11 @@ class LLMResponse:
         return self.input_tokens + self.output_tokens
 
 
+def encode_image(image: bytes) -> str:
+    """Base64-encode raw image bytes (PNG) for embedding in a multimodal LLM request."""
+    return base64.b64encode(image).decode()
+
+
 class LLMProvider(ABC):
     """Abstract interface for all LLM backends.
 
@@ -24,8 +30,14 @@ class LLMProvider(ABC):
     """
 
     @abstractmethod
-    def generate(self, prompt: str, system: str | None = None, **kwargs) -> LLMResponse:
-        """Single-turn generation from a plain prompt string."""
+    def generate(
+        self,
+        prompt: str,
+        system: str | None = None,
+        images: list[bytes] | None = None,
+        **kwargs,
+    ) -> LLMResponse:
+        """Single-turn generation from a plain prompt string, optionally with images (raw PNG bytes)."""
         ...
 
     @abstractmethod

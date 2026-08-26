@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 
-from forge.llm.base import LLMProvider, LLMResponse
+from forge.llm.base import LLMProvider, LLMResponse, encode_image
 
 
 class ClaudeProvider(LLMProvider):
@@ -27,8 +27,25 @@ class ClaudeProvider(LLMProvider):
         self._model = model
         self._max_tokens = max_tokens
 
-    def generate(self, prompt: str, system: str | None = None, **kwargs) -> LLMResponse:
-        return self.chat([{"role": "user", "content": prompt}], system=system, **kwargs)
+    def generate(
+        self,
+        prompt: str,
+        system: str | None = None,
+        images: list[bytes] | None = None,
+        **kwargs,
+    ) -> LLMResponse:
+        if images:
+            content: str | list[dict] = [
+                {
+                    "type": "image",
+                    "source": {"type": "base64", "media_type": "image/png", "data": encode_image(img)},
+                }
+                for img in images
+            ]
+            content.append({"type": "text", "text": prompt})
+        else:
+            content = prompt
+        return self.chat([{"role": "user", "content": content}], system=system, **kwargs)
 
     def chat(
         self,
