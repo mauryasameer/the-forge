@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from forge.llm.base import LLMProvider, LLMResponse
+from forge.llm.base import LLMProvider, LLMResponse, encode_image
 
 
 class OllamaProvider(LLMProvider):
@@ -17,11 +17,20 @@ class OllamaProvider(LLMProvider):
         self._model = model
         self._host = host
 
-    def generate(self, prompt: str, system: str | None = None, **kwargs) -> LLMResponse:
-        messages: list[dict[str, str]] = []
+    def generate(
+        self,
+        prompt: str,
+        system: str | None = None,
+        images: list[bytes] | None = None,
+        **kwargs,
+    ) -> LLMResponse:
+        messages: list[dict] = []
         if system:
             messages.append({"role": "system", "content": system})
-        messages.append({"role": "user", "content": prompt})
+        user_message: dict = {"role": "user", "content": prompt}
+        if images:
+            user_message["images"] = [encode_image(img) for img in images]
+        messages.append(user_message)
         return self.chat(messages, **kwargs)
 
     def chat(
