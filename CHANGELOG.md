@@ -3,6 +3,19 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.4.0] - 2026-08-26
+### Added
+- `forge.vision.gridplot.plot_translation_grid()` now accepts `np.ndarray` images (channels-last
+  `(H,W,C)` or `(H,W)`, in `[-1,1]`) alongside the existing `torch.Tensor` support, so
+  TensorFlow/Keras-based projects can use it without forge taking a TensorFlow dependency —
+  callers pass `tensor.numpy()`. Strictly additive; existing torch-only callers unaffected.
+
+### Fixed
+- README was out of date since the v0.3.0 release: missing the `forge.vision` module from the
+  Modules table and Project Structure tree, and a stale unit test count (58, actually 72).
+
+[0.4.0]: https://github.com/mauryasameer/the-forge/compare/v0.3.0...v0.4.0
+
 ## [0.3.0] - 2026-08-01
 ### Added
 - `forge.vision` module: `get_device()` (CUDA/MPS/CPU auto-detection), `ImageFolderDataset`

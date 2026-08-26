@@ -1,6 +1,6 @@
 # The Forge
 
-![Version](https://img.shields.io/badge/version-0.2.1-c8a96e)
+![Version](https://img.shields.io/badge/version-0.4.0-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
@@ -9,13 +9,13 @@ Shared ML utilities — LLM providers, evaluation metrics, visualization, and re
 ## Install
 
 ```bash
-pip install git+https://github.com/mauryasameer/the-forge.git@v0.2.1
+pip install git+https://github.com/mauryasameer/the-forge.git@v0.4.0
 ```
 
 Or pin in `requirements.txt`:
 
 ```
-sameer-forge @ git+https://github.com/mauryasameer/the-forge.git@v0.2.1
+sameer-forge @ git+https://github.com/mauryasameer/the-forge.git@v0.4.0
 ```
 
 ## Modules
@@ -30,6 +30,7 @@ sameer-forge @ git+https://github.com/mauryasameer/the-forge.git@v0.2.1
 | `forge.data` | CSV/parquet loaders with schema validation, stratified + time splits, SMOTE |
 | `forge.report` | Self-contained dark-themed HTML model-card report builder |
 | `forge.logging` | One-call structured logger factory |
+| `forge.vision` | Image folder dataset loader (PyTorch) + translation-grid plotting (torch or numpy/TF images) |
 
 ## Scaffolding Projects
 
@@ -116,10 +117,11 @@ the-forge/
 │   ├── report/         # HTML report builder
 │   ├── scaffold/       # Project skeleton templates + create/retrofit logic
 │   ├── cli.py          # `forge new` / `forge init` command entry point
+│   ├── vision/         # Image dataset loader + translation-grid plotting
 │   └── logging.py      # Structured logger
 ├── benchmarks/         # Standalone ML benchmark scripts
 ├── tests/
-│   └── unit/           # 58 unit tests, zero external deps
+│   └── unit/           # 72 unit tests, zero external deps
 ├── pyproject.toml
 ├── requirements.txt
 └── VERSION
