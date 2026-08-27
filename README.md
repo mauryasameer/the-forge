@@ -1,4 +1,4 @@
-# The Forge
+# meerax
 
 ![Version](https://img.shields.io/badge/version-1.0.0-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.12-00e5cc)
@@ -6,7 +6,8 @@
 
 Shared ML utilities — LLM providers, evaluation metrics, visualization, and report generation.
 Used as an in-house dependency across all of Sameer Maurya's ML projects and organization.
-Published as the `meerax` package.
+Source repo: [the-forge](https://github.com/mauryasameer/the-forge) — kept its original name;
+only the installable package was renamed to `meerax`.
 
 ## Install
 
