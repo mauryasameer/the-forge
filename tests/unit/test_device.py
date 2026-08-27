@@ -1,6 +1,6 @@
 import torch
 
-from forge.vision.device import get_device
+from meerax.vision.device import get_device
 
 
 def test_prefers_cuda_when_available(mocker):

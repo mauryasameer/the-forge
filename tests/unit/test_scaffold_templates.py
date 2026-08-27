@@ -1,4 +1,4 @@
-from forge.scaffold import templates
+from meerax.scaffold import templates
 
 
 def test_pyproject_toml_includes_project_name():

@@ -3,7 +3,7 @@ from __future__ import annotations
 import matplotlib.pyplot as plt
 import numpy as np
 
-from forge.viz.theme import FORGE_ACCENT, FORGE_CYBER
+from meerax.viz.theme import MEERAX_ACCENT, MEERAX_CYBER
 
 
 def plot_forecast(
@@ -13,8 +13,8 @@ def plot_forecast(
     ax: plt.Axes | None = None,
 ) -> plt.Figure:
     fig, ax = (ax.get_figure(), ax) if ax is not None else plt.subplots(figsize=(10, 4))
-    ax.plot(actual, color=FORGE_ACCENT, label="Actual", lw=1.5)
-    ax.plot(predicted, color=FORGE_CYBER, label="Predicted", lw=1.5, linestyle="--")
+    ax.plot(actual, color=MEERAX_ACCENT, label="Actual", lw=1.5)
+    ax.plot(predicted, color=MEERAX_CYBER, label="Predicted", lw=1.5, linestyle="--")
     ax.set_title(title)
     ax.legend()
     fig.tight_layout()
@@ -33,7 +33,7 @@ def plot_decomposition(
     components = [result.observed, result.trend, result.seasonal, result.resid]
     labels = ["Observed", "Trend", "Seasonal", "Residual"]
     for ax, data, label in zip(axes, components, labels, strict=False):
-        ax.plot(data, color=FORGE_CYBER, lw=1.2)
+        ax.plot(data, color=MEERAX_CYBER, lw=1.2)
         ax.set_ylabel(label, fontsize=8)
     fig.suptitle(title)
     fig.tight_layout()

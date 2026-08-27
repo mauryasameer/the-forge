@@ -1,4 +1,4 @@
-from forge.cli import main
+from meerax.cli import main
 
 
 def test_new_creates_project_and_git_repo(tmp_path):
@@ -8,7 +8,7 @@ def test_new_creates_project_and_git_repo(tmp_path):
     assert exit_code == 0
     assert (root / "src" / "core").is_dir()
     assert (root / ".git").is_dir()
-    assert "sameer-forge" in (root / "requirements.txt").read_text()
+    assert "meerax" in (root / "requirements.txt").read_text()
 
 
 def test_new_fails_if_directory_already_exists(tmp_path, capsys):

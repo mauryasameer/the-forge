@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from forge.data.split import stratified_split, time_split
+from meerax.data.split import stratified_split, time_split
 
 
 def _make_df(n: int = 100) -> pd.DataFrame:

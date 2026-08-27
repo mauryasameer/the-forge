@@ -1,4 +1,4 @@
-from forge.eval.text import bleu_score, rouge_l
+from meerax.eval.text import bleu_score, rouge_l
 
 
 def test_rouge_l_perfect():

@@ -3,7 +3,7 @@ from __future__ import annotations
 import matplotlib.pyplot as plt
 import numpy as np
 
-from forge.viz.theme import FORGE_ACCENT, FORGE_CYBER
+from meerax.viz.theme import MEERAX_ACCENT, MEERAX_CYBER
 
 
 def plot_confusion_matrix(
@@ -39,8 +39,8 @@ def plot_roc_curve(
     ax: plt.Axes | None = None,
 ) -> plt.Figure:
     fig, ax = (ax.get_figure(), ax) if ax is not None else plt.subplots(figsize=(5, 4))
-    ax.plot(fpr, tpr, color=FORGE_CYBER, lw=2, label=f"AUC = {auc:.3f}")
-    ax.plot([0, 1], [0, 1], color=FORGE_ACCENT, lw=1, linestyle="--", label="Random")
+    ax.plot(fpr, tpr, color=MEERAX_CYBER, lw=2, label=f"AUC = {auc:.3f}")
+    ax.plot([0, 1], [0, 1], color=MEERAX_ACCENT, lw=1, linestyle="--", label="Random")
     ax.set_xlim([0.0, 1.0])
     ax.set_ylim([0.0, 1.05])
     ax.set_xlabel("False Positive Rate")

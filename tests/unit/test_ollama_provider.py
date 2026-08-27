@@ -1,4 +1,4 @@
-from forge.llm.ollama import OllamaProvider
+from meerax.llm.ollama import OllamaProvider
 
 
 def test_generate_without_images_sends_plain_content(mocker):

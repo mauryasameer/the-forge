@@ -1,4 +1,4 @@
-from forge.llm.prompt import PromptTemplate
+from meerax.llm.prompt import PromptTemplate
 
 
 def test_render_basic():

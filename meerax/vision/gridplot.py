@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 import matplotlib.pyplot as plt
 import numpy as np
 
-from forge.viz.theme import apply_forge_theme
+from meerax.viz.theme import apply_meerax_theme
 
 if TYPE_CHECKING:
     import torch
@@ -18,7 +18,7 @@ def _to_display_array(image: torch.Tensor | np.ndarray) -> np.ndarray:
         # loaded in the same process (e.g. a TF-based project using only the numpy path).
         import torch
 
-        from forge.vision.dataset import denormalize
+        from meerax.vision.dataset import denormalize
 
         if isinstance(image, torch.Tensor):
             return denormalize(image).permute(1, 2, 0).detach().cpu().numpy()
@@ -35,7 +35,7 @@ def plot_translation_grid(rows: list[tuple[str, torch.Tensor | np.ndarray]]) -> 
     - a torch.Tensor, channels-first (3, H, W), in [-1, 1]
     - a np.ndarray, channels-last (H, W, C) or (H, W), in [-1, 1]
     """
-    apply_forge_theme()
+    apply_meerax_theme()
     fig, axes = plt.subplots(1, len(rows), figsize=(4 * len(rows), 4))
     if len(rows) == 1:
         axes = [axes]

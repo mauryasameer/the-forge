@@ -5,8 +5,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-import forge
-from forge.scaffold.skeleton import create_tree, ensure_forge_dependency, retrofit_tree
+import meerax
+from meerax.scaffold.skeleton import create_tree, ensure_meerax_dependency, retrofit_tree
 
 
 def cmd_new(args: argparse.Namespace) -> int:
@@ -15,7 +15,7 @@ def cmd_new(args: argparse.Namespace) -> int:
         print(f"error: {root} already exists", file=sys.stderr)
         return 1
     result = create_tree(root, args.name)
-    ensure_forge_dependency(root, forge.__version__)
+    ensure_meerax_dependency(root, meerax.__version__)
     try:
         subprocess.run(["git", "init"], cwd=root, check=True, capture_output=True)
     except (subprocess.CalledProcessError, FileNotFoundError) as exc:
@@ -33,7 +33,7 @@ def cmd_init(args: argparse.Namespace) -> int:
         print(f"error: {root} does not exist", file=sys.stderr)
         return 1
     result = retrofit_tree(root, root.resolve().name)
-    dep_status = ensure_forge_dependency(root, forge.__version__)
+    dep_status = ensure_meerax_dependency(root, meerax.__version__)
     print(f"created {len(result.created)}, skipped {len(result.skipped)} (already present)")
     for path in result.created:
         print(f"  create {path.relative_to(root)}")
@@ -48,7 +48,7 @@ def cmd_init(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="forge")
+    parser = argparse.ArgumentParser(prog="meerax")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     new_parser = subparsers.add_parser("new", help="scaffold a new project")

@@ -1,4 +1,4 @@
-from forge.llm.base import LLMResponse
+from meerax.llm.base import LLMResponse
 
 
 def test_total_tokens():

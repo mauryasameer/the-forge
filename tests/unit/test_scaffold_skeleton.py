@@ -1,4 +1,4 @@
-from forge.scaffold.skeleton import GITKEEP_DIRS, create_tree, ensure_forge_dependency, retrofit_tree
+from meerax.scaffold.skeleton import GITKEEP_DIRS, create_tree, ensure_meerax_dependency, retrofit_tree
 
 EXPECTED_DIRS = [
     "src/core",
@@ -74,29 +74,29 @@ def test_retrofit_tree_reports_unrecognized_entries(tmp_path):
     assert root / "analysis.ipynb" in result.unrecognized
 
 
-def test_ensure_forge_dependency_creates_when_missing(tmp_path):
-    status = ensure_forge_dependency(tmp_path, "0.2.0")
+def test_ensure_meerax_dependency_creates_when_missing(tmp_path):
+    status = ensure_meerax_dependency(tmp_path, "0.2.0")
     content = (tmp_path / "requirements.txt").read_text()
 
     assert status == "created"
-    assert "sameer-forge @ git+https://github.com/mauryasameer/the-forge.git@v0.2.0" in content
+    assert "meerax @ git+https://github.com/mauryasameer/the-forge.git@v0.2.0" in content
 
 
-def test_ensure_forge_dependency_appends_when_file_exists_without_it(tmp_path):
+def test_ensure_meerax_dependency_appends_when_file_exists_without_it(tmp_path):
     (tmp_path / "requirements.txt").write_text("pandas>=2.2\n")
-    status = ensure_forge_dependency(tmp_path, "0.2.0")
+    status = ensure_meerax_dependency(tmp_path, "0.2.0")
     content = (tmp_path / "requirements.txt").read_text()
 
     assert status == "appended"
     assert "pandas>=2.2" in content
-    assert "sameer-forge" in content
+    assert "meerax" in content
 
 
-def test_ensure_forge_dependency_noop_when_already_present(tmp_path):
+def test_ensure_meerax_dependency_noop_when_already_present(tmp_path):
     (tmp_path / "requirements.txt").write_text(
-        "sameer-forge @ git+https://github.com/mauryasameer/the-forge.git@v0.1.0\n"
+        "meerax @ git+https://github.com/mauryasameer/the-forge.git@v0.1.0\n"
     )
-    status = ensure_forge_dependency(tmp_path, "0.2.0")
+    status = ensure_meerax_dependency(tmp_path, "0.2.0")
 
     assert status == "unchanged"
 

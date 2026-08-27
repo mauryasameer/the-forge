@@ -1,4 +1,4 @@
-from forge.llm.claude import ClaudeProvider
+from meerax.llm.claude import ClaudeProvider
 
 
 def _mock_response(mocker, text, model, input_tokens, output_tokens):

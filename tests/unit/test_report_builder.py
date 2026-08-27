@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from forge.report.builder import ReportBuilder, ReportSection
+from meerax.report.builder import ReportBuilder, ReportSection
 
 
 def test_to_html_contains_title():

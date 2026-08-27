@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from forge.scaffold import templates
+from meerax.scaffold import templates
 
 GITKEEP_DIRS = [
     "src/core",
@@ -45,8 +45,8 @@ RECOGNIZED_TOP_LEVEL = {
     ".gitignore",
 }
 
-FORGE_DEP_MARKER = "sameer-forge"
-FORGE_REPO_URL = "https://github.com/mauryasameer/the-forge.git"
+MEERAX_DEP_MARKER = "meerax"
+MEERAX_REPO_URL = "https://github.com/mauryasameer/the-forge.git"
 
 
 @dataclass
@@ -113,14 +113,14 @@ def _find_unrecognized(root: Path) -> list[Path]:
     return unrecognized
 
 
-def ensure_forge_dependency(root: Path, version: str) -> str:
-    dep_line = f"sameer-forge @ git+{FORGE_REPO_URL}@v{version}\n"
+def ensure_meerax_dependency(root: Path, version: str) -> str:
+    dep_line = f"meerax @ git+{MEERAX_REPO_URL}@v{version}\n"
     req_path = root / "requirements.txt"
     if not req_path.exists():
         req_path.write_text(dep_line)
         return "created"
     content = req_path.read_text()
-    if FORGE_DEP_MARKER in content:
+    if MEERAX_DEP_MARKER in content:
         return "unchanged"
     if content and not content.endswith("\n"):
         content += "\n"
