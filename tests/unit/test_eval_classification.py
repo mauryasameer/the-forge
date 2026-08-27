@@ -1,6 +1,6 @@
 import numpy as np
 
-from forge.eval.classification import evaluate_classifier
+from meerax.eval.classification import evaluate_classifier
 
 
 def test_perfect_classifier():

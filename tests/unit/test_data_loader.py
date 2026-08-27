@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from forge.data.loader import load_csv
+from meerax.data.loader import load_csv
 
 
 def test_load_csv_basic(tmp_path: Path):

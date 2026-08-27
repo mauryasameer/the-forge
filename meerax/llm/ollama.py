@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from forge.llm.base import LLMProvider, LLMResponse, encode_image
+from meerax.llm.base import LLMProvider, LLMResponse, encode_image
 
 
 class OllamaProvider(LLMProvider):

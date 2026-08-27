@@ -1,66 +1,69 @@
 # The Forge
 
-![Version](https://img.shields.io/badge/version-0.5.3-c8a96e)
+![Version](https://img.shields.io/badge/version-1.0.0-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.12-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
-Shared ML utilities — LLM providers, evaluation metrics, visualization, and report generation. Used as an in-house dependency across all of Sameer Maurya's ML projects.
+Shared ML utilities — LLM providers, evaluation metrics, visualization, and report generation.
+Used as an in-house dependency across all of Sameer Maurya's ML projects and organization.
+Published as the `meerax` package.
 
 ## Install
 
 ```bash
-pip install git+https://github.com/mauryasameer/the-forge.git@v0.5.2
+pip install git+https://github.com/mauryasameer/the-forge.git@v1.0.0
 ```
 
 Or pin in `requirements.txt`:
 
 ```
-sameer-forge @ git+https://github.com/mauryasameer/the-forge.git@v0.5.2
+meerax @ git+https://github.com/mauryasameer/the-forge.git@v1.0.0
 ```
+
+Once published to PyPI, this becomes `pip install meerax` / `meerax==1.0.0`.
 
 ## Modules
 
 | Module | What it gives you |
 |---|---|
-| `forge.llm` | Swap-in LLM backends — Claude, OpenAI, Ollama behind one interface, text or images |
-| `forge.eval.classification` | F1, AUC-ROC, precision, recall in one call |
-| `forge.eval.timeseries` | RMSE, MAPE, SMAPE, ADF stationarity test |
-| `forge.eval.text` | BLEU-4, ROUGE-L for caption / summary quality |
-| `forge.viz` | Dark-themed matplotlib plots (confusion matrix, ROC, forecast, decomposition) |
-| `forge.data` | CSV/parquet loaders with schema validation, stratified + time splits, SMOTE |
-| `forge.report` | Self-contained dark-themed HTML model-card report builder |
-| `forge.logging` | One-call structured logger factory |
-| `forge.vision` | Image folder dataset loader (PyTorch) + translation-grid plotting (torch or numpy/TF images) |
+| `meerax.llm` | Swap-in LLM backends — Claude, OpenAI, Ollama behind one interface, text or images |
+| `meerax.eval.classification` | F1, AUC-ROC, precision, recall in one call |
+| `meerax.eval.timeseries` | RMSE, MAPE, SMAPE, ADF stationarity test |
+| `meerax.eval.text` | BLEU-4, ROUGE-L for caption / summary quality |
+| `meerax.viz` | Dark-themed matplotlib plots (confusion matrix, ROC, forecast, decomposition) |
+| `meerax.data` | CSV/parquet loaders with schema validation, stratified + time splits, SMOTE |
+| `meerax.report` | Self-contained dark-themed HTML model-card report builder |
+| `meerax.logging` | One-call structured logger factory |
+| `meerax.vision` | Image folder dataset loader (PyTorch) + translation-grid plotting (torch or numpy/TF images) |
 
 ## Scaffolding Projects
 
 Every project in the ecosystem follows the same PROJECT_STANDARDS.md layout and depends on
-`sameer-forge`. The `forge` CLI (installed alongside the package) generates or retrofits that
-layout:
+`meerax`. The `meerax` CLI (installed alongside the package) generates or retrofits that layout:
 
 ```bash
 # brand-new project
-forge new my-project --path ~/dev
+meerax new my-project --path ~/dev
 
 # retrofit an existing, non-empty directory — additive only, never overwrites
 cd ~/dev/my-existing-notebook-project
-forge init
+meerax init
 ```
 
-`forge new` creates the full `src/{core,providers,services,utils,data}` + `tests/` + CI
-skeleton, pins `requirements.txt` to the current `sameer-forge` release, and runs `git init`.
+`meerax new` creates the full `src/{core,providers,services,utils,data}` + `tests/` + CI
+skeleton, pins `requirements.txt` to the current `meerax` release, and runs `git init`.
 
-`forge init` fills in whatever's missing from that same layout without touching files that
+`meerax init` fills in whatever's missing from that same layout without touching files that
 already exist, and reports any top-level files it doesn't recognize (e.g. notebooks) so you can
 move them into `src/` by hand.
 
 ## Quick Start
 
 ```python
-from forge.llm import ClaudeProvider, PromptTemplate
-from forge.eval import evaluate_classifier
-from forge.viz import apply_forge_theme
-from forge.report import ReportBuilder, ReportSection
+from meerax.llm import ClaudeProvider, PromptTemplate
+from meerax.eval import evaluate_classifier
+from meerax.viz import apply_meerax_theme
+from meerax.report import ReportBuilder, ReportSection
 
 # LLM: swap provider without changing downstream code
 llm = ClaudeProvider()                         # or OpenAIProvider() / OllamaProvider()
@@ -75,7 +78,7 @@ print(metrics)
 # AUC-ROC  : 0.9912
 
 # Viz + Report
-apply_forge_theme()
+apply_meerax_theme()
 rb = ReportBuilder("Fraud Detection — Model Report v0.1.0")
 rb.add_section(ReportSection(
     title="Performance",
@@ -90,7 +93,7 @@ rb.save("reports/model_report.html")
 All providers implement `LLMProvider.generate()` and `.chat()`. Swap with one line:
 
 ```python
-from forge.llm import ClaudeProvider, OpenAIProvider, OllamaProvider
+from meerax.llm import ClaudeProvider, OpenAIProvider, OllamaProvider
 
 llm = ClaudeProvider()    # needs ANTHROPIC_API_KEY
 llm = OpenAIProvider()    # needs OPENAI_API_KEY
@@ -109,19 +112,20 @@ Self-contained benchmark scripts in `benchmarks/`:
 
 ```
 the-forge/
-├── forge/              # Installable package
+├── meerax/              # Installable package
 │   ├── llm/            # LLM provider abstraction
-│   ├── eval/           # Evaluation metrics
-│   ├── viz/            # Visualization utilities
-│   ├── data/           # Data loading, splitting, resampling
-│   ├── report/         # HTML report builder
-│   ├── scaffold/       # Project skeleton templates + create/retrofit logic
-│   ├── cli.py          # `forge new` / `forge init` command entry point
-│   ├── vision/         # Image dataset loader + translation-grid plotting
-│   └── logging.py      # Structured logger
-├── benchmarks/         # Standalone ML benchmark scripts
+│   ├── eval/            # Evaluation metrics
+│   ├── viz/             # Visualization utilities
+│   ├── data/            # Data loading, splitting, resampling
+│   ├── report/          # HTML report builder
+│   ├── scaffold/        # Project skeleton templates + create/retrofit logic
+│   ├── cli.py           # `meerax new` / `meerax init` command entry point
+│   ├── vision/          # Image dataset loader + translation-grid plotting
+│   └── logging.py       # Structured logger
+├── benchmarks/          # Standalone ML benchmark scripts
 ├── tests/
-│   └── unit/           # 79 unit tests, zero external deps
+│   └── unit/            # 80 unit tests, zero external deps
+├── LICENSE
 ├── pyproject.toml
 ├── requirements.txt
 └── VERSION

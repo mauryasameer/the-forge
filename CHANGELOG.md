@@ -3,6 +3,19 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.0.0] - 2026-08-28
+### Changed
+- **Breaking:** package renamed from `sameer-forge` (import `forge`) to `meerax` (import `meerax`), ahead of publishing to PyPI for use across the organization. The PyPI distribution name `sameer-forge` was available, but the `forge` import namespace was not — an unrelated, already-published PyPI package also claims `forge`, which would silently collide with this package's files if both were ever installed in the same environment. The `meerax new`/`meerax init` CLI commands replace `forge new`/`forge init`.
+- Version is now single-sourced from `VERSION` (via `[tool.setuptools.dynamic]` at build time, `importlib.metadata.version()` at runtime) instead of being duplicated across `VERSION`, `pyproject.toml`, and `meerax/__init__.py`.
+- Added `parquet` as its own optional-dependency extra instead of bundling `pyarrow` directly into `all`.
+
+### Added
+- Real `LICENSE` file (MIT) — previously declared in `pyproject.toml` but not actually included in the repo or distribution archives.
+- `project.urls` metadata (Homepage, Repository, Issues, Changelog).
+- GitHub Actions release workflow publishing to PyPI via Trusted Publishing on version tags.
+
+[1.0.0]: https://github.com/mauryasameer/the-forge/compare/v0.5.3...v1.0.0
+
 ## [0.5.3] - 2026-08-26
 ### Fixed
 - `forge.vision`'s package `__init__` and `gridplot._to_display_array` eagerly imported torch/torchvision even for pure-numpy callers, forcing torch's CUDA/triton native libraries to load. Loading torch alongside TensorFlow in the same process (as a TF-based project using only `gridplot`'s numpy path does) segfaults on Linux. Both now defer the torch import until a `torch.Tensor` input actually needs it.

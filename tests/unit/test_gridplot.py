@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
-from forge.vision.gridplot import plot_translation_grid
+from meerax.vision.gridplot import plot_translation_grid
 
 
 def test_plot_translation_grid_returns_figure_with_one_axis_per_row():
@@ -54,7 +54,7 @@ def test_numpy_only_usage_does_not_import_torch():
     script = (
         "import sys\n"
         "import numpy as np\n"
-        "from forge.vision.gridplot import plot_translation_grid\n"
+        "from meerax.vision.gridplot import plot_translation_grid\n"
         "plot_translation_grid([('a', np.zeros((4, 4, 1), dtype=np.float32))])\n"
         "assert 'torch' not in sys.modules, 'torch was imported for a numpy-only call'\n"
     )

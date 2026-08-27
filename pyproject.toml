@@ -3,9 +3,9 @@ requires = ["setuptools>=69", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "sameer-forge"
-version = "0.5.3"
-description = "Shared ML utilities — LLM providers, evaluation metrics, visualization, and report generation for Sameer Maurya's projects."
+name = "meerax"
+dynamic = ["version"]
+description = "Shared ML utilities — LLM providers, evaluation metrics, visualization, and report generation for Sameer Maurya's projects and organization."
 readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "MIT" }
@@ -23,8 +23,14 @@ dependencies = [
     "scikit-learn>=1.4",
 ]
 
+[project.urls]
+Homepage = "https://github.com/mauryasameer/the-forge"
+Repository = "https://github.com/mauryasameer/the-forge"
+Issues = "https://github.com/mauryasameer/the-forge/issues"
+Changelog = "https://github.com/mauryasameer/the-forge/blob/main/CHANGELOG.md"
+
 [project.scripts]
-forge = "forge.cli:main"
+meerax = "meerax.cli:main"
 
 [project.optional-dependencies]
 llm = ["anthropic>=0.40", "openai>=1.55", "ollama>=0.3"]
@@ -32,19 +38,23 @@ stats = ["statsmodels>=0.14"]
 nlp = ["nltk>=3.9"]
 imbalance = ["imbalanced-learn>=0.12"]
 vision = ["torch>=2.2", "torchvision>=0.17", "pillow>=10.2"]
+parquet = ["pyarrow>=15"]
 all = [
-    "sameer-forge[llm]",
-    "sameer-forge[stats]",
-    "sameer-forge[nlp]",
-    "sameer-forge[imbalance]",
-    "sameer-forge[vision]",
-    "pyarrow>=15",
+    "meerax[llm]",
+    "meerax[stats]",
+    "meerax[nlp]",
+    "meerax[imbalance]",
+    "meerax[vision]",
+    "meerax[parquet]",
 ]
 dev = ["pytest>=8", "pytest-mock>=3.12", "ruff==0.11.13"]
 
+[tool.setuptools.dynamic]
+version = { file = "VERSION" }
+
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["forge*"]
+include = ["meerax*"]
 
 [tool.ruff]
 target-version = "py312"

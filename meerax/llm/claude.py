@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 
-from forge.llm.base import LLMProvider, LLMResponse, encode_image
+from meerax.llm.base import LLMProvider, LLMResponse, encode_image
 
 
 class ClaudeProvider(LLMProvider):

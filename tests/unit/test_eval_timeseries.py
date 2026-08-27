@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from forge.eval.timeseries import evaluate_forecast
+from meerax.eval.timeseries import evaluate_forecast
 
 
 def test_perfect_forecast():

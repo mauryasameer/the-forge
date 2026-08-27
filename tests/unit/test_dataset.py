@@ -2,7 +2,7 @@ import pytest
 import torch
 from PIL import Image
 
-from forge.vision.dataset import ImageFolderDataset, denormalize, normalize
+from meerax.vision.dataset import ImageFolderDataset, denormalize, normalize
 
 
 def _make_image(path, color=(255, 0, 0), size=(8, 8)):

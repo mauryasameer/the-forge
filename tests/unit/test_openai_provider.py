@@ -1,4 +1,4 @@
-from forge.llm.openai_provider import OpenAIProvider
+from meerax.llm.openai_provider import OpenAIProvider
 
 
 def _mock_response(mocker, text, model, prompt_tokens, completion_tokens):
