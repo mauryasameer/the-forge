@@ -1,0 +1,36 @@
+name: Reusable CI
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        type: string
+        default: "3.12"
+      ruff-version:
+        type: string
+        default: "0.11.13"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+          cache: pip
+      - run: pip install -r requirements.txt pytest==8.*
+      - run: pytest tests/unit/ -v --tb=short
+      - run: pytest tests/integration/ -v --tb=short
+      - run: meerax doctor
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+          cache: pip
+      - run: pip install ruff==${{ inputs.ruff-version }}
+      - run: ruff check .

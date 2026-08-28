@@ -9,22 +9,10 @@ def test_pyproject_toml_includes_project_name():
     assert 'build-backend = "setuptools.build_meta"' in content
 
 
-def test_ci_yml_uses_single_python_version_not_a_matrix():
+def test_ci_yml_calls_the_shared_reusable_workflow():
     content = templates.ci_yml()
+    assert "uses: mauryasameer/the-forge/.github/workflows/reusable-ci.yml@main" in content
     assert "matrix" not in content
-    assert 'python-version: "3.12"' in content
-
-
-def test_ci_yml_pins_ruff_version():
-    content = templates.ci_yml()
-    assert "ruff==0.11.13" in content
-    assert "pytest tests/unit/" in content
-    assert "pytest tests/integration/" in content
-
-
-def test_ci_yml_installs_pytest_for_test_job():
-    content = templates.ci_yml()
-    assert "pip install -r requirements.txt pytest==8.*" in content
 
 
 def test_gitignore_ignores_src_data_contents():
