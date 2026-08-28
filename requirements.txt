@@ -13,7 +13,7 @@ ollama==0.4.8
 statsmodels==0.14.6
 
 # NLP eval
-nltk==3.9.1
+nltk==3.10.3
 
 # Imbalanced datasets
 imbalanced-learn==0.13.0
