@@ -40,6 +40,22 @@ jobs:
 '''
 
 
+def dependabot_yml() -> str:
+    return '''version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+'''
+
+
 def gitignore() -> str:
     return '''__pycache__/
 *.pyc

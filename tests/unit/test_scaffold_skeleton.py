@@ -16,6 +16,7 @@ EXPECTED_DIRS = [
 EXPECTED_FILES = [
     "pyproject.toml",
     ".github/workflows/ci.yml",
+    ".github/dependabot.yml",
     ".gitignore",
     "conftest.py",
     "README.md",
