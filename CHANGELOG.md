@@ -3,6 +3,16 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.5.0] - 2026-08-28
+### Added
+- `ARCHITECTURE.md` — documents the provider-abstraction pattern, the `src/{core,providers,services}` layering, why meerax exists, and why the standards-enforcement layer (`meerax doctor` + the reusable CI workflow) exists.
+- `SECURITY.md` — API key handling, dependency-update review guidance, reporting.
+- `meerax bump <version>` — updates VERSION, the README version badge, and inserts a dated CHANGELOG heading in one step. Doesn't write CHANGELOG content or a compare-link footer, since only a human (or an AI assistant) who knows what changed can write those honestly. Used to bump this very release.
+
+Roadmap phase 4 (of the ecosystem audit) — the last phase, closing out the "make future apps cheaper to build" goal. The one item not shipped here — an opt-in `--template` for the recurring "provider-swap service + HTML report" shape — is being built separately as its own real, runnable example rather than speculative stub code.
+
+[1.5.0]: https://github.com/mauryasameer/the-forge/compare/v1.4.1...v1.5.0
+
 ## [1.4.0] - 2026-08-28
 ### Added
 - `.github/dependabot.yml` (pip + github-actions, weekly) — added to this repo, and to the `meerax new`/`meerax init` scaffold so every future project gets it automatically.
