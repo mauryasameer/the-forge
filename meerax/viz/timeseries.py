@@ -13,6 +13,7 @@ def plot_forecast(
     ax: plt.Axes | None = None,
 ) -> plt.Figure:
     fig, ax = (ax.get_figure(), ax) if ax is not None else plt.subplots(figsize=(10, 4))
+    assert isinstance(fig, plt.Figure)
     ax.plot(actual, color=MEERAX_ACCENT, label="Actual", lw=1.5)
     ax.plot(predicted, color=MEERAX_CYBER, label="Predicted", lw=1.5, linestyle="--")
     ax.set_title(title)

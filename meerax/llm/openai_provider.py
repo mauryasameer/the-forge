@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from typing import Any
 
 from meerax.llm.base import LLMProvider, LLMResponse, encode_image
 
@@ -50,7 +51,7 @@ class OpenAIProvider(LLMProvider):
 
     def chat(
         self,
-        messages: list[dict[str, str]],
+        messages: list[dict[str, Any]],
         system: str | None = None,
         **kwargs,
     ) -> LLMResponse:
@@ -59,12 +60,13 @@ class OpenAIProvider(LLMProvider):
         response = self._client.chat.completions.create(
             model=kwargs.get("model", self._model),
             max_tokens=kwargs.get("max_tokens", self._max_tokens),
-            messages=messages,
+            messages=messages,  # type: ignore[arg-type]
         )
         choice = response.choices[0]
+        usage = response.usage
         return LLMResponse(
             content=choice.message.content or "",
             model=response.model,
-            input_tokens=response.usage.prompt_tokens,
-            output_tokens=response.usage.completion_tokens,
+            input_tokens=usage.prompt_tokens if usage else 0,
+            output_tokens=usage.completion_tokens if usage else 0,
         )
