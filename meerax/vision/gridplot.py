@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     import torch
 
 
-def _to_display_array(image: torch.Tensor | np.ndarray) -> np.ndarray:
+def _to_display_array(image: torch.Tensor | np.ndarray[Any, Any]) -> np.ndarray[Any, Any]:
     if not isinstance(image, np.ndarray):
         # Lazy: importing torch/torchvision at module scope forces their CUDA/triton
         # native libraries to load, which segfaults when a caller also has TensorFlow
@@ -22,14 +22,15 @@ def _to_display_array(image: torch.Tensor | np.ndarray) -> np.ndarray:
         from meerax.vision.dataset import denormalize
 
         if isinstance(image, torch.Tensor):
-            return denormalize(image).permute(1, 2, 0).detach().cpu().numpy()
-    array = np.clip((np.asarray(image, dtype=np.float32) + 1.0) / 2.0, 0.0, 1.0)
+            result: np.ndarray[Any, Any] = denormalize(image).permute(1, 2, 0).detach().cpu().numpy()
+            return result
+    array: np.ndarray[Any, Any] = np.clip((np.asarray(image, dtype=np.float32) + 1.0) / 2.0, 0.0, 1.0)
     if array.ndim == 3 and array.shape[-1] == 1:
         array = array[..., 0]
     return array
 
 
-def plot_translation_grid(rows: list[tuple[str, torch.Tensor | np.ndarray]]) -> Figure:
+def plot_translation_grid(rows: list[tuple[str, torch.Tensor | np.ndarray[Any, Any]]]) -> Figure:
     """Plot a row of labeled images side by side.
 
     Each item is (label, image), where image is either:

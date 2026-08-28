@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.axes import Axes
@@ -9,8 +11,8 @@ from meerax.viz.theme import MEERAX_ACCENT, MEERAX_CYBER
 
 
 def plot_forecast(
-    actual: np.ndarray,
-    predicted: np.ndarray,
+    actual: np.ndarray[Any, Any],
+    predicted: np.ndarray[Any, Any],
     title: str = "Forecast vs Actual",
     ax: Axes | None = None,
 ) -> Figure:
@@ -25,7 +27,7 @@ def plot_forecast(
 
 
 def plot_decomposition(
-    series: np.ndarray,
+    series: np.ndarray[Any, Any],
     period: int = 12,
     title: str = "Seasonal Decomposition",
 ) -> Figure:
