@@ -3,6 +3,22 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.7.0] - 2026-08-28
+### Changed
+- `mypy` now runs with real `strict = true` instead of just `ignore_missing_imports` — the README claimed strict mode before this was actually true. Fixed the 30 errors this surfaced: missing `**kwargs: Any` annotations across all three LLM providers, `dict` → `dict[str, Any]`/`Any` generic type args, `matplotlib.pyplot.Figure`/`.Axes` replaced with direct `matplotlib.figure.Figure`/`matplotlib.axes.Axes` imports (the `plt.` namespace doesn't type-export them), `Dataset` → `Dataset[torch.Tensor]`, and an explicit intermediate variable to stop a `no-any-return` from PyTorch's imprecise arithmetic-operator stubs. 2 narrowly-scoped `# type: ignore` comments remain for genuine third-party stub gaps (documented in each).
+- CI's test job now runs `tests/integration/` too — it only ever ran `tests/unit/`, so the 4 integration tests (including the one that scaffolds and runs the `--template llm-report` example) were never actually exercised in CI.
+- The release workflow now depends on the same lint/typecheck/test checks as CI before building or publishing — previously it would build and publish to PyPI off nothing but `twine check`, with no guarantee tests had ever run against the tagged commit. Lint/typecheck/test logic is shared between `ci.yml` and `release.yml` via a new local reusable workflow (`.github/workflows/_checks.yml`) instead of being duplicated.
+- `pip install mypy>=1.10 pandas-stubs` was unquoted in CI — the shell parses the bare `>` as an output redirect, silently creating a file named `=1.10` and installing an unconstrained `mypy` instead of respecting the `>=1.10` floor. Fixed to `pip install "mypy>=1.10" pandas-stubs`.
+- Modernized license metadata to PEP 639 / Metadata 2.4: `license = "MIT"` + `license-files = ["LICENSE"]` instead of the older `license = { text = "MIT" }` table, and dropped the now-redundant `License :: OSI Approved :: MIT License` classifier. Requires `setuptools>=77` (bumped from `>=69`); verified with a real `python -m build` + `twine check`.
+
+### Fixed
+- README overclaimed "zero ignored errors" for mypy — 2 real `# type: ignore` comments exist for genuine stub gaps. Wording corrected to name them instead of denying they exist.
+- README's unit test count had drifted again (said 137, actually 143 even before this release's own new tests).
+
+All of these were caught by an external review after this session's own final "everything's fixed" summary — a reminder that ecosystem-wide claims need the same verification discipline as any other code claim.
+
+[1.7.0]: https://github.com/mauryasameer/the-forge/compare/v1.6.1...v1.7.0
+
 ## [1.6.1] - 2026-08-28
 ### Fixed
 - This repo's own `.github/dependabot.yml` never got `target-branch: dev` — the scaffold template and both downstream repos were fixed in v1.4.1, but the-forge's own file at the repo root was missed. The next scan here would have opened PRs against `main` directly, same as the original incident.

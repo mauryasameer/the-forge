@@ -6,14 +6,14 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 
-import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 
 
 @dataclass
 class ReportSection:
     title: str
     content: str = ""
-    figures: list[plt.Figure] = field(default_factory=list)
+    figures: list[Figure] = field(default_factory=list)
     metrics: dict[str, str | float | int] = field(default_factory=dict)
 
 
@@ -41,7 +41,7 @@ class ReportBuilder:
         return self
 
     @staticmethod
-    def _fig_to_b64(fig: plt.Figure) -> str:
+    def _fig_to_b64(fig: Figure) -> str:
         buf = io.BytesIO()
         fig.savefig(buf, format="png", bbox_inches="tight", facecolor=fig.get_facecolor())
         buf.seek(0)

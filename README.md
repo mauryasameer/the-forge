@@ -1,6 +1,6 @@
 # meerax
 
-![Version](https://img.shields.io/badge/version-1.6.1-c8a96e)
+![Version](https://img.shields.io/badge/version-1.7.0-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.12-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
@@ -9,8 +9,9 @@ Used as an in-house dependency across all of Sameer Maurya's ML projects and org
 Source repo: [the-forge](https://github.com/mauryasameer/the-forge) — kept its original name;
 only the installable package was renamed to `meerax`.
 
-CI gates on mypy (strict, zero ignored errors) and a minimum 85% test coverage — both enforced
-on every PR, not just checked locally.
+CI gates on mypy (`strict = true`, with 2 narrowly-scoped `# type: ignore` exceptions for known
+third-party stub gaps) and a minimum 85% test coverage — both enforced on every PR, not just
+checked locally.
 
 ## Install
 
@@ -21,7 +22,7 @@ pip install meerax
 Or pin in `requirements.txt`:
 
 ```
-meerax==1.6.1
+meerax==1.7.0
 ```
 
 ## Modules
@@ -165,7 +166,7 @@ the-forge/
 │   └── logging.py       # Structured logger
 ├── benchmarks/          # Standalone ML benchmark scripts
 ├── tests/
-│   ├── unit/            # 137 unit tests, zero external deps
+│   ├── unit/            # 143 unit tests, zero external deps
 │   └── integration/     # 4 cross-module pipeline tests
 ├── ARCHITECTURE.md
 ├── SECURITY.md

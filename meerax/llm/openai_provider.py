@@ -33,13 +33,13 @@ class OpenAIProvider(LLMProvider):
         prompt: str,
         system: str | None = None,
         images: list[bytes] | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> LLMResponse:
-        messages: list[dict] = []
+        messages: list[dict[str, Any]] = []
         if system:
             messages.append({"role": "system", "content": system})
         if images:
-            content: list[dict] = [{"type": "text", "text": prompt}]
+            content: list[dict[str, Any]] = [{"type": "text", "text": prompt}]
             content.extend(
                 {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{encode_image(img)}"}}
                 for img in images
@@ -53,7 +53,7 @@ class OpenAIProvider(LLMProvider):
         self,
         messages: list[dict[str, Any]],
         system: str | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> LLMResponse:
         if system and not any(m["role"] == "system" for m in messages):
             messages = [{"role": "system", "content": system}, *messages]
