@@ -38,3 +38,34 @@ def test_init_fails_if_directory_missing(tmp_path, capsys):
 
     assert exit_code == 1
     assert "does not exist" in capsys.readouterr().err
+
+
+def test_doctor_exits_zero_on_a_freshly_scaffolded_project(tmp_path, monkeypatch):
+    from unittest.mock import MagicMock
+
+    root = tmp_path / "my-project"
+    main(["new", "my-project", "--path", str(tmp_path)])
+    (root / "LICENSE").write_text("MIT")
+    (root / "CHANGELOG.md").write_text("## [0.1.0] - 2026-08-28\n### Added\n- Initial release\n")
+
+    mock_resp = MagicMock()
+    mock_resp.__enter__.return_value = mock_resp
+    mock_resp.read.return_value = b'{"info": {"version": "1.0.1"}}'
+    monkeypatch.setattr("meerax.doctor.urllib.request.urlopen", lambda *a, **k: mock_resp)
+
+    exit_code = main(["doctor", "--path", str(root)])
+
+    assert exit_code == 0
+
+
+def test_doctor_exits_nonzero_when_planning_docs_present(tmp_path, capsys):
+    root = tmp_path / "existing"
+    (root / "docs" / "specs").mkdir(parents=True)
+    (root / "docs" / "specs" / "design.md").write_text("# design")
+
+    exit_code = main(["doctor", "--path", str(root)])
+    out = capsys.readouterr().out
+
+    assert exit_code == 1
+    assert "no-planning-docs" in out
+    assert "docs/specs" in out
