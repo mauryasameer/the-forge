@@ -2,7 +2,7 @@
 numpy==2.5.2
 pandas==2.2.3
 matplotlib==3.11.1
-scikit-learn==1.6.1
+scikit-learn==1.9.0
 
 # LLM providers (install what you need)
 anthropic==0.52.0
