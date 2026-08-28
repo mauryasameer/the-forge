@@ -95,9 +95,16 @@ def check_meerax_pin_freshness(root: Path) -> CheckResult:
 
 
 def check_dependabot_present(root: Path) -> CheckResult:
-    if (root / ".github" / "dependabot.yml").exists():
-        return CheckResult("dependabot-present", "pass", "dependabot.yml found")
-    return CheckResult("dependabot-present", "warn", "no .github/dependabot.yml found")
+    dependabot_path = root / ".github" / "dependabot.yml"
+    if not dependabot_path.exists():
+        return CheckResult("dependabot-present", "warn", "no .github/dependabot.yml found")
+    if 'target-branch: "dev"' not in dependabot_path.read_text():
+        return CheckResult(
+            "dependabot-present",
+            "fail",
+            "dependabot.yml found but doesn't set target-branch: dev — PRs will target main directly",
+        )
+    return CheckResult("dependabot-present", "pass", "dependabot.yml found, targets dev")
 
 
 CHECKS = [
