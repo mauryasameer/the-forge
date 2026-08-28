@@ -3,6 +3,13 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.0.1] - 2026-08-28
+### Fixed
+- Scaffold's `ensure_meerax_dependency()` still templated a `git+https://...` dependency line for newly scaffolded projects — stale now that `meerax` is genuinely on PyPI. New projects now get a plain `meerax==<version>` pin.
+- `meerax.data.imbalance` (`smote_oversample`, `random_undersample`) had zero test coverage since v0.1.0.
+
+[1.0.1]: https://github.com/mauryasameer/the-forge/compare/v1.0.0...v1.0.1
+
 ## [1.0.0] - 2026-08-28
 ### Changed
 - **Breaking:** package renamed from `sameer-forge` (import `forge`) to `meerax` (import `meerax`), ahead of publishing to PyPI for use across the organization. The PyPI distribution name `sameer-forge` was available, but the `forge` import namespace was not — an unrelated, already-published PyPI package also claims `forge`, which would silently collide with this package's files if both were ever installed in the same environment. The `meerax new`/`meerax init` CLI commands replace `forge new`/`forge init`.
