@@ -22,6 +22,11 @@ def test_dependabot_yml_configures_pip_and_github_actions():
     assert 'interval: "weekly"' in content
 
 
+def test_dependabot_yml_targets_dev_not_main():
+    content = templates.dependabot_yml()
+    assert content.count('target-branch: "dev"') == 2
+
+
 def test_gitignore_ignores_src_data_contents():
     content = templates.gitignore()
     assert "src/data/*" in content
