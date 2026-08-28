@@ -19,6 +19,13 @@ All of these were caught by an external review after this session's own final "e
 
 [1.7.0]: https://github.com/mauryasameer/the-forge/compare/v1.6.1...v1.7.0
 
+## [1.6.1] - 2026-08-28
+### Fixed
+- This repo's own `.github/dependabot.yml` never got `target-branch: dev` — the scaffold template and both downstream repos were fixed in v1.4.1, but the-forge's own file at the repo root was missed. The next scan here would have opened PRs against `main` directly, same as the original incident.
+- `meerax doctor`'s `dependabot-present` check now verifies `target-branch: dev` is actually set, not just that the file exists — this exact gap should have been caught by doctor and wasn't.
+
+[1.6.1]: https://github.com/mauryasameer/the-forge/compare/v1.6.0...v1.6.1
+
 ## [1.6.0] - 2026-08-28
 ### Added
 - `meerax new`/`meerax init --template llm-report` — an opt-in, genuinely functional example on top of the bare skeleton: a narrative service that calls any `meerax.llm` provider, a report service that builds an HTML summary via `meerax.report`, and an `app.py` wiring them together with real, passing tests. Not stub methods to fill in — verified by scaffolding it for real and running its generated test suite as a subprocess in this repo's own integration tests.
