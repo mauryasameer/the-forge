@@ -10,7 +10,7 @@ openai==1.93.0
 ollama==0.4.8
 
 # Stats / time-series
-statsmodels==0.14.4
+statsmodels==0.14.6
 
 # NLP eval
 nltk==3.9.1
