@@ -6,8 +6,12 @@ on:
       - "v*.*.*"
 
 jobs:
+  checks:
+    uses: ./.github/workflows/_checks.yml
+
   build:
     name: Build and check distributions
+    needs: checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7

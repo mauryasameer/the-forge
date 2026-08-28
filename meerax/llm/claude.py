@@ -33,7 +33,7 @@ class ClaudeProvider(LLMProvider):
         prompt: str,
         system: str | None = None,
         images: list[bytes] | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> LLMResponse:
         content: str | list[dict[str, Any]]
         if images:
@@ -55,9 +55,9 @@ class ClaudeProvider(LLMProvider):
         self,
         messages: list[dict[str, Any]],
         system: str | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> LLMResponse:
-        params: dict = {
+        params: dict[str, Any] = {
             "model": kwargs.get("model", self._model),
             "max_tokens": kwargs.get("max_tokens", self._max_tokens),
             "messages": messages,

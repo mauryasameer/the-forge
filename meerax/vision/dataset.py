@@ -16,7 +16,8 @@ IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png")
 def normalize(image: Image.Image) -> torch.Tensor:
     """Convert a PIL RGB image to a (3, H, W) float tensor in [-1, 1]."""
     tensor = TF.to_tensor(image.convert("RGB"))  # [0, 1]
-    return tensor * 2.0 - 1.0
+    result: torch.Tensor = tensor * 2.0 - 1.0
+    return result
 
 
 def denormalize(tensor: torch.Tensor) -> torch.Tensor:
@@ -24,7 +25,7 @@ def denormalize(tensor: torch.Tensor) -> torch.Tensor:
     return ((tensor + 1.0) / 2.0).clamp(0.0, 1.0)
 
 
-class ImageFolderDataset(Dataset):
+class ImageFolderDataset(Dataset[torch.Tensor]):
     """Loads every image in a flat directory as a normalized (3, image_size, image_size) tensor."""
 
     def __init__(self, directory: str | Path, image_size: int = 256) -> None:

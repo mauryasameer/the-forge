@@ -24,12 +24,12 @@ class OllamaProvider(LLMProvider):
         prompt: str,
         system: str | None = None,
         images: list[bytes] | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> LLMResponse:
-        messages: list[dict] = []
+        messages: list[dict[str, Any]] = []
         if system:
             messages.append({"role": "system", "content": system})
-        user_message: dict = {"role": "user", "content": prompt}
+        user_message: dict[str, Any] = {"role": "user", "content": prompt}
         if images:
             user_message["images"] = [encode_image(img) for img in images]
         messages.append(user_message)
@@ -39,7 +39,7 @@ class OllamaProvider(LLMProvider):
         self,
         messages: list[dict[str, Any]],
         system: str | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> LLMResponse:
         if system and not any(m["role"] == "system" for m in messages):
             messages = [{"role": "system", "content": system}, *messages]

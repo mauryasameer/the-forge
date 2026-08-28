@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.axes import Axes
+from matplotlib.figure import Figure
 
 from meerax.viz.theme import MEERAX_ACCENT, MEERAX_CYBER
 
@@ -10,10 +12,10 @@ def plot_forecast(
     actual: np.ndarray,
     predicted: np.ndarray,
     title: str = "Forecast vs Actual",
-    ax: plt.Axes | None = None,
-) -> plt.Figure:
+    ax: Axes | None = None,
+) -> Figure:
     fig, ax = (ax.get_figure(), ax) if ax is not None else plt.subplots(figsize=(10, 4))
-    assert isinstance(fig, plt.Figure)
+    assert isinstance(fig, Figure)
     ax.plot(actual, color=MEERAX_ACCENT, label="Actual", lw=1.5)
     ax.plot(predicted, color=MEERAX_CYBER, label="Predicted", lw=1.5, linestyle="--")
     ax.set_title(title)
@@ -26,7 +28,7 @@ def plot_decomposition(
     series: np.ndarray,
     period: int = 12,
     title: str = "Seasonal Decomposition",
-) -> plt.Figure:
+) -> Figure:
     from statsmodels.tsa.seasonal import seasonal_decompose
 
     result = seasonal_decompose(series, model="additive", period=period)

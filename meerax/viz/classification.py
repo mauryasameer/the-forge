@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.axes import Axes
+from matplotlib.figure import Figure
 
 from meerax.viz.theme import MEERAX_ACCENT, MEERAX_CYBER
 
@@ -10,10 +12,10 @@ def plot_confusion_matrix(
     cm: np.ndarray,
     labels: list[str] | None = None,
     title: str = "Confusion Matrix",
-    ax: plt.Axes | None = None,
-) -> plt.Figure:
+    ax: Axes | None = None,
+) -> Figure:
     fig, ax = (ax.get_figure(), ax) if ax is not None else plt.subplots(figsize=(5, 4))
-    assert isinstance(fig, plt.Figure)
+    assert isinstance(fig, Figure)
     im = ax.imshow(cm, cmap="YlGnBu", aspect="auto")
     ax.set_title(title)
     ticks = range(cm.shape[0])
@@ -37,10 +39,10 @@ def plot_roc_curve(
     tpr: np.ndarray,
     auc: float,
     title: str = "ROC Curve",
-    ax: plt.Axes | None = None,
-) -> plt.Figure:
+    ax: Axes | None = None,
+) -> Figure:
     fig, ax = (ax.get_figure(), ax) if ax is not None else plt.subplots(figsize=(5, 4))
-    assert isinstance(fig, plt.Figure)
+    assert isinstance(fig, Figure)
     ax.plot(fpr, tpr, color=MEERAX_CYBER, lw=2, label=f"AUC = {auc:.3f}")
     ax.plot([0, 1], [0, 1], color=MEERAX_ACCENT, lw=1, linestyle="--", label="Random")
     ax.set_xlim(0.0, 1.0)
