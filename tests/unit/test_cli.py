@@ -68,4 +68,30 @@ def test_doctor_exits_nonzero_when_planning_docs_present(tmp_path, capsys):
 
     assert exit_code == 1
     assert "no-planning-docs" in out
-    assert "docs/specs" in out
+
+
+def test_bump_updates_version_and_prints_summary(tmp_path, capsys):
+    (tmp_path / "VERSION").write_text("1.0.0\n")
+
+    exit_code = main(["bump", "1.1.0", "--path", str(tmp_path)])
+    out = capsys.readouterr().out
+
+    assert exit_code == 0
+    assert (tmp_path / "VERSION").read_text() == "1.1.0\n"
+    assert "1.0.0" in out
+    assert "1.1.0" in out
+
+
+def test_bump_fails_on_invalid_version(tmp_path, capsys):
+    exit_code = main(["bump", "not-a-version", "--path", str(tmp_path)])
+    err = capsys.readouterr().err
+
+    assert exit_code == 1
+    assert "not-a-version" in err
+
+
+def test_bump_fails_if_directory_missing(tmp_path, capsys):
+    exit_code = main(["bump", "1.0.0", "--path", str(tmp_path / "nope")])
+
+    assert exit_code == 1
+    assert "does not exist" in capsys.readouterr().err

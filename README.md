@@ -1,6 +1,6 @@
 # meerax
 
-![Version](https://img.shields.io/badge/version-1.4.0-c8a96e)
+![Version](https://img.shields.io/badge/version-1.5.0-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.12-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
@@ -21,7 +21,7 @@ pip install meerax
 Or pin in `requirements.txt`:
 
 ```
-meerax==1.4.0
+meerax==1.5.0
 ```
 
 ## Modules
@@ -73,6 +73,17 @@ meerax doctor
 ```
 
 Exits non-zero if anything fails, so it's safe to run in CI.
+
+`meerax bump <version>` updates VERSION, the README version badge, and inserts a dated
+CHANGELOG heading in one step — the exact multi-file edit that's caused version-badge drift
+more than once across this ecosystem's history:
+
+```bash
+meerax bump 1.2.0
+```
+
+It doesn't write CHANGELOG content or a compare-link footer — those need someone who actually
+knows what changed.
 
 ## Quick Start
 
@@ -136,14 +147,17 @@ the-forge/
 │   ├── data/            # Data loading, splitting, resampling
 │   ├── report/          # HTML report builder
 │   ├── scaffold/        # Project skeleton templates + create/retrofit logic
-│   ├── cli.py           # `meerax new` / `init` / `doctor` command entry point
+│   ├── cli.py           # `meerax new` / `init` / `doctor` / `bump` command entry point
 │   ├── doctor.py        # PROJECT_STANDARDS.md compliance checks
+│   ├── release.py       # VERSION/README badge/CHANGELOG bump helper
 │   ├── vision/          # Image dataset loader + translation-grid plotting
 │   └── logging.py       # Structured logger
 ├── benchmarks/          # Standalone ML benchmark scripts
 ├── tests/
-│   ├── unit/            # 117 unit tests, zero external deps
+│   ├── unit/            # 131 unit tests, zero external deps
 │   └── integration/     # 3 cross-module pipeline tests
+├── ARCHITECTURE.md
+├── SECURITY.md
 ├── LICENSE
 ├── pyproject.toml
 ├── requirements.txt
