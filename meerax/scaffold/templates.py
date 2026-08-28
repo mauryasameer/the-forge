@@ -45,12 +45,14 @@ def dependabot_yml() -> str:
 updates:
   - package-ecosystem: "pip"
     directory: "/"
+    target-branch: "dev"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
 
   - package-ecosystem: "github-actions"
     directory: "/"
+    target-branch: "dev"
     schedule:
       interval: "weekly"
 '''
