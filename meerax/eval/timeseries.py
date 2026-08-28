@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
 import numpy as np
 
@@ -26,7 +27,7 @@ class TimeSeriesMetrics:
         return {"rmse": self.rmse, "mae": self.mae, "mape": self.mape, "smape": self.smape}
 
 
-def evaluate_forecast(y_true: np.ndarray, y_pred: np.ndarray) -> TimeSeriesMetrics:
+def evaluate_forecast(y_true: np.ndarray[Any, Any], y_pred: np.ndarray[Any, Any]) -> TimeSeriesMetrics:
     """Standard regression metrics for time-series forecasts."""
     y_true = np.asarray(y_true, dtype=float)
     y_pred = np.asarray(y_pred, dtype=float)
@@ -48,7 +49,7 @@ def evaluate_forecast(y_true: np.ndarray, y_pred: np.ndarray) -> TimeSeriesMetri
     return TimeSeriesMetrics(rmse=rmse, mae=mae, mape=mape, smape=smape)
 
 
-def adf_stationarity(series: np.ndarray) -> dict[str, float | bool]:
+def adf_stationarity(series: np.ndarray[Any, Any]) -> dict[str, float | bool]:
     """Augmented Dickey-Fuller test. Returns p-value and stationarity decision."""
     from statsmodels.tsa.stattools import adfuller
 

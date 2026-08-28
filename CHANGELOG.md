@@ -3,6 +3,14 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.7.1] - 2026-08-28
+### Changed
+- Bumped `ruff` 0.11.13 → 0.16.4, `pyarrow` 20.0.0 → 25.0.1, `pytest-mock` 3.14.1 → 3.15.1 (Dependabot PRs #54, #55, #56).
+- Ruff 0.16.4 newly enforces `PLC0415` (import-not-at-top-level) against the package's ~10 deliberate lazy imports — a pattern used throughout to avoid eager-loading heavy/conflicting ML dependencies (torch, tensorflow, anthropic, openai, ollama, sklearn, statsmodels, nltk, imblearn). Moved `PLC0415` into the project-wide `[tool.ruff.lint] ignore` list instead of suppressing it per file.
+
+### Fixed
+- Verified this bump against the real Python 3.12 toolchain (`requires-python = ">=3.12"`) rather than the locally available Python 3.9 environment — the 3.9 run had been silently masking real mypy findings (a stale `# type: ignore` diagnosis) and picking up a stray, untracked worktree during ruff's file walk. All checks (ruff, mypy --strict, full test suite) now verified clean under an actual 3.12 interpreter.
+
 ## [1.7.0] - 2026-08-28
 ### Changed
 - `mypy` now runs with real `strict = true` instead of just `ignore_missing_imports` — the README claimed strict mode before this was actually true. Fixed the 30 errors this surfaced: missing `**kwargs: Any` annotations across all three LLM providers, `dict` → `dict[str, Any]`/`Any` generic type args, `matplotlib.pyplot.Figure`/`.Axes` replaced with direct `matplotlib.figure.Figure`/`matplotlib.axes.Axes` imports (the `plt.` namespace doesn't type-export them), `Dataset` → `Dataset[torch.Tensor]`, and an explicit intermediate variable to stop a `no-any-return` from PyTorch's imprecise arithmetic-operator stubs. 2 narrowly-scoped `# type: ignore` comments remain for genuine third-party stub gaps (documented in each).

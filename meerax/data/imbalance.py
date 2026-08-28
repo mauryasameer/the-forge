@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from typing import Any
 
 import numpy as np
 
@@ -8,10 +9,10 @@ logger = logging.getLogger(__name__)
 
 
 def smote_oversample(
-    X: np.ndarray,
-    y: np.ndarray,
+    X: np.ndarray[Any, Any],
+    y: np.ndarray[Any, Any],
     random_state: int = 42,
-) -> tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray[Any, Any], np.ndarray[Any, Any]]:
     """SMOTE oversampling. Requires imbalanced-learn."""
     try:
         from imblearn.over_sampling import SMOTE
@@ -23,10 +24,10 @@ def smote_oversample(
 
 
 def random_undersample(
-    X: np.ndarray,
-    y: np.ndarray,
+    X: np.ndarray[Any, Any],
+    y: np.ndarray[Any, Any],
     random_state: int = 42,
-) -> tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray[Any, Any], np.ndarray[Any, Any]]:
     """Random majority-class undersampling. Requires imbalanced-learn."""
     try:
         from imblearn.under_sampling import RandomUnderSampler
