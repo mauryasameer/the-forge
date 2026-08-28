@@ -1,3 +1,4 @@
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -31,6 +32,26 @@ MAIN_FILES = {
 
 GITKEEP_FILES = {f"{d}/.gitkeep": (lambda name: "") for d in GITKEEP_DIRS}
 
+@dataclass
+class ProjectTemplate:
+    extras: list[str]
+    files: dict[str, Callable[[str], str]]
+
+
+TEMPLATES: dict[str, ProjectTemplate] = {
+    "llm-report": ProjectTemplate(
+        extras=["llm"],
+        files={
+            "src/services/narrative_service.py": lambda name: templates.llm_report_narrative_service_py(),
+            "src/services/report_service.py": lambda name: templates.llm_report_report_service_py(),
+            "src/app.py": lambda name: templates.llm_report_app_py(name),
+            "tests/unit/test_narrative_service.py": lambda name: templates.llm_report_test_narrative_service_py(),
+            "tests/unit/test_report_service.py": lambda name: templates.llm_report_test_report_service_py(),
+            "tests/integration/test_pipeline.py": lambda name: templates.llm_report_test_pipeline_py(),
+        },
+    ),
+}
+
 RECOGNIZED_TOP_LEVEL = {
     "src",
     "tests",
@@ -56,14 +77,23 @@ class ScaffoldResult:
     unrecognized: list[Path] = field(default_factory=list)
 
 
-def create_tree(root: Path, project_name: str) -> ScaffoldResult:
+def _template_files(template: str | None) -> dict[str, Callable[[str], str]]:
+    if template is None:
+        return {}
+    if template not in TEMPLATES:
+        raise ValueError(f"unknown template: {template!r} (available: {sorted(TEMPLATES)})")
+    return TEMPLATES[template].files
+
+
+def create_tree(root: Path, project_name: str, template: str | None = None) -> ScaffoldResult:
+    template_files = _template_files(template)
     root.mkdir(parents=True, exist_ok=False)
     result = ScaffoldResult()
     for rel_dir in ALL_DIRS:
         dir_path = root / rel_dir
         dir_path.mkdir(parents=True, exist_ok=True)
         result.created.append(dir_path)
-    for rel_file, template_fn in MAIN_FILES.items():
+    for rel_file, template_fn in {**MAIN_FILES, **template_files}.items():
         file_path = root / rel_file
         file_path.parent.mkdir(parents=True, exist_ok=True)
         file_path.write_text(template_fn(project_name))
@@ -76,7 +106,8 @@ def create_tree(root: Path, project_name: str) -> ScaffoldResult:
     return result
 
 
-def retrofit_tree(root: Path, project_name: str) -> ScaffoldResult:
+def retrofit_tree(root: Path, project_name: str, template: str | None = None) -> ScaffoldResult:
+    template_files = _template_files(template)
     result = ScaffoldResult()
     for rel_dir in ALL_DIRS:
         dir_path = root / rel_dir
@@ -85,7 +116,7 @@ def retrofit_tree(root: Path, project_name: str) -> ScaffoldResult:
         else:
             dir_path.mkdir(parents=True, exist_ok=True)
             result.created.append(dir_path)
-    for rel_file, template_fn in MAIN_FILES.items():
+    for rel_file, template_fn in {**MAIN_FILES, **template_files}.items():
         file_path = root / rel_file
         if file_path.exists():
             result.skipped.append(file_path)
@@ -113,8 +144,9 @@ def _find_unrecognized(root: Path) -> list[Path]:
     return unrecognized
 
 
-def ensure_meerax_dependency(root: Path, version: str) -> str:
-    dep_line = f"meerax=={version}\n"
+def ensure_meerax_dependency(root: Path, version: str, extras: list[str] | None = None) -> str:
+    extras_suffix = f"[{','.join(extras)}]" if extras else ""
+    dep_line = f"meerax{extras_suffix}=={version}\n"
     req_path = root / "requirements.txt"
     if not req_path.exists():
         req_path.write_text(dep_line)

@@ -8,7 +8,7 @@ from pathlib import Path
 import meerax
 from meerax.doctor import run_checks
 from meerax.release import bump_version
-from meerax.scaffold.skeleton import create_tree, ensure_meerax_dependency, retrofit_tree
+from meerax.scaffold.skeleton import TEMPLATES, create_tree, ensure_meerax_dependency, retrofit_tree
 
 _STATUS_ICON = {"pass": "✓", "warn": "!", "fail": "✗"}
 
@@ -18,8 +18,13 @@ def cmd_new(args: argparse.Namespace) -> int:
     if root.exists():
         print(f"error: {root} already exists", file=sys.stderr)
         return 1
-    result = create_tree(root, args.name)
-    ensure_meerax_dependency(root, meerax.__version__)
+    try:
+        result = create_tree(root, args.name, template=args.template)
+    except ValueError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    extras = TEMPLATES[args.template].extras if args.template else None
+    ensure_meerax_dependency(root, meerax.__version__, extras=extras)
     try:
         subprocess.run(["git", "init"], cwd=root, check=True, capture_output=True)
     except (subprocess.CalledProcessError, FileNotFoundError) as exc:
@@ -36,8 +41,13 @@ def cmd_init(args: argparse.Namespace) -> int:
     if not root.exists():
         print(f"error: {root} does not exist", file=sys.stderr)
         return 1
-    result = retrofit_tree(root, root.resolve().name)
-    dep_status = ensure_meerax_dependency(root, meerax.__version__)
+    try:
+        result = retrofit_tree(root, root.resolve().name, template=args.template)
+    except ValueError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    extras = TEMPLATES[args.template].extras if args.template else None
+    dep_status = ensure_meerax_dependency(root, meerax.__version__, extras=extras)
     print(f"created {len(result.created)}, skipped {len(result.skipped)} (already present)")
     for path in result.created:
         print(f"  create {path.relative_to(root)}")
@@ -84,10 +94,12 @@ def build_parser() -> argparse.ArgumentParser:
     new_parser = subparsers.add_parser("new", help="scaffold a new project")
     new_parser.add_argument("name")
     new_parser.add_argument("--path", default=".")
+    new_parser.add_argument("--template", choices=sorted(TEMPLATES), default=None)
     new_parser.set_defaults(func=cmd_new)
 
     init_parser = subparsers.add_parser("init", help="retrofit an existing project")
     init_parser.add_argument("--path", default=".")
+    init_parser.add_argument("--template", choices=sorted(TEMPLATES), default=None)
     init_parser.set_defaults(func=cmd_init)
 
     doctor_parser = subparsers.add_parser("doctor", help="check a project against PROJECT_STANDARDS.md")

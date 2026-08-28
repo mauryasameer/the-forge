@@ -19,6 +19,23 @@ def test_new_fails_if_directory_already_exists(tmp_path, capsys):
     assert "already exists" in capsys.readouterr().err
 
 
+def test_new_with_llm_report_template_pins_llm_extra(tmp_path):
+    exit_code = main(["new", "my-app", "--path", str(tmp_path), "--template", "llm-report"])
+    root = tmp_path / "my-app"
+
+    assert exit_code == 0
+    assert (root / "src" / "app.py").is_file()
+    assert "meerax[llm]==" in (root / "requirements.txt").read_text()
+
+
+def test_new_rejects_unrecognized_template(tmp_path, capsys):
+    import pytest
+
+    with pytest.raises(SystemExit):
+        main(["new", "my-app", "--path", str(tmp_path), "--template", "not-real"])
+    assert "invalid choice" in capsys.readouterr().err
+
+
 def test_init_retrofits_existing_directory(tmp_path, capsys):
     root = tmp_path / "existing"
     root.mkdir()
