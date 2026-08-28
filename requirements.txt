@@ -22,6 +22,6 @@ imbalanced-learn==0.14.2
 pyarrow==20.0.0
 
 # Dev / CI
-ruff==0.11.13
+ruff==0.16.4
 pytest==9.1.1
 pytest-mock==3.14.1
