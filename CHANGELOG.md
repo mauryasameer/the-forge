@@ -13,6 +13,12 @@ Roadmap phase 4 (of the ecosystem audit) — the last phase, closing out the "ma
 
 [1.5.0]: https://github.com/mauryasameer/the-forge/compare/v1.4.1...v1.5.0
 
+## [1.4.1] - 2026-08-28
+### Fixed
+- The scaffold's generated `dependabot.yml` didn't set `target-branch`, so Dependabot defaulted to opening PRs against `main` directly — violating this ecosystem's PR-into-dev-only convention. All 17 PRs Dependabot opened across the three repos on first scan had to be retargeted by hand — and even after retargeting, asking Dependabot to `@dependabot rebase` silently reset several of them back to `main`, so 8 dependency bumps landed there directly before this was caught. Recovered by merging `main`'s extra commits back into `dev`. Lesson: don't use Dependabot's own rebase command to fix a PR whose base you changed by hand — it appears to re-derive the target branch from the update branch's own stale config rather than the current one.
+
+[1.4.1]: https://github.com/mauryasameer/the-forge/compare/v1.4.0...v1.4.1
+
 ## [1.4.0] - 2026-08-28
 ### Added
 - `.github/dependabot.yml` (pip + github-actions, weekly) — added to this repo, and to the `meerax new`/`meerax init` scaffold so every future project gets it automatically.
