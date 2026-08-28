@@ -3,6 +3,15 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.6.0] - 2026-08-28
+### Added
+- `meerax new`/`meerax init --template llm-report` — an opt-in, genuinely functional example on top of the bare skeleton: a narrative service that calls any `meerax.llm` provider, a report service that builds an HTML summary via `meerax.report`, and an `app.py` wiring them together with real, passing tests. Not stub methods to fill in — verified by scaffolding it for real and running its generated test suite as a subprocess in this repo's own integration tests.
+- `ensure_meerax_dependency()` now accepts `extras`, so the template's `meerax[llm]` pin gets generated correctly.
+
+This closes roadmap phase 4's one deferred item — the recurring "provider-swap service + HTML report" shape, proven twice already (trend-whisperer, pixel-drift), is now reusable without generating speculative or fake business logic.
+
+[1.6.0]: https://github.com/mauryasameer/the-forge/compare/v1.5.0...v1.6.0
+
 ## [1.5.0] - 2026-08-28
 ### Added
 - `ARCHITECTURE.md` — documents the provider-abstraction pattern, the `src/{core,providers,services}` layering, why meerax exists, and why the standards-enforcement layer (`meerax doctor` + the reusable CI workflow) exists.

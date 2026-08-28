@@ -39,6 +39,43 @@ def test_create_tree_creates_all_dirs_and_files(tmp_path):
     assert result.skipped == []
 
 
+def test_create_tree_with_llm_report_template_adds_extra_files(tmp_path):
+    root = tmp_path / "my-app"
+    create_tree(root, "my-app", template="llm-report")
+
+    assert (root / "src/services/narrative_service.py").is_file()
+    assert (root / "src/services/report_service.py").is_file()
+    assert (root / "src/app.py").is_file()
+    assert (root / "tests/unit/test_narrative_service.py").is_file()
+    assert (root / "tests/unit/test_report_service.py").is_file()
+    assert (root / "tests/integration/test_pipeline.py").is_file()
+
+
+def test_create_tree_rejects_unknown_template(tmp_path):
+    import pytest
+
+    with pytest.raises(ValueError, match="unknown template"):
+        create_tree(tmp_path / "my-app", "my-app", template="not-a-real-template")
+
+
+def test_retrofit_tree_with_llm_report_template_adds_extra_files(tmp_path):
+    root = tmp_path / "existing-project"
+    root.mkdir()
+
+    retrofit_tree(root, "existing-project", template="llm-report")
+
+    assert (root / "src/app.py").is_file()
+    assert (root / "src/services/narrative_service.py").is_file()
+
+
+def test_ensure_meerax_dependency_with_extras(tmp_path):
+    status = ensure_meerax_dependency(tmp_path, "1.5.0", extras=["llm"])
+    content = (tmp_path / "requirements.txt").read_text()
+
+    assert status == "created"
+    assert "meerax[llm]==1.5.0" in content
+
+
 def test_retrofit_tree_only_creates_missing(tmp_path):
     root = tmp_path / "existing-project"
     root.mkdir()
