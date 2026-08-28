@@ -3,6 +3,12 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.4.1] - 2026-08-28
+### Fixed
+- The scaffold's generated `dependabot.yml` didn't set `target-branch`, so Dependabot defaulted to opening PRs against `main` directly — violating this ecosystem's PR-into-dev-only convention. All 17 PRs Dependabot opened across the three repos on first scan had to be retargeted by hand.
+
+[1.4.1]: https://github.com/mauryasameer/the-forge/compare/v1.4.0...v1.4.1
+
 ## [1.4.0] - 2026-08-28
 ### Added
 - `.github/dependabot.yml` (pip + github-actions, weekly) — added to this repo, and to the `meerax new`/`meerax init` scaffold so every future project gets it automatically.
