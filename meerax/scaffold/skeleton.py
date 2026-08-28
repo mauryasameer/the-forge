@@ -46,7 +46,6 @@ RECOGNIZED_TOP_LEVEL = {
 }
 
 MEERAX_DEP_MARKER = "meerax"
-MEERAX_REPO_URL = "https://github.com/mauryasameer/the-forge.git"
 
 
 @dataclass
@@ -114,7 +113,7 @@ def _find_unrecognized(root: Path) -> list[Path]:
 
 
 def ensure_meerax_dependency(root: Path, version: str) -> str:
-    dep_line = f"meerax @ git+{MEERAX_REPO_URL}@v{version}\n"
+    dep_line = f"meerax=={version}\n"
     req_path = root / "requirements.txt"
     if not req_path.exists():
         req_path.write_text(dep_line)
