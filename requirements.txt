@@ -1,12 +1,12 @@
 # Core (always required)
 numpy==2.5.2
-pandas==2.2.3
+pandas==3.0.5
 matplotlib==3.11.1
 scikit-learn==1.9.0
 
 # LLM providers (install what you need)
-anthropic==0.52.0
-openai==1.93.0
+anthropic==1.0.0
+openai==3.3.1
 ollama==0.6.2
 
 # Stats / time-series

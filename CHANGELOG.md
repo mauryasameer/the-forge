@@ -3,6 +3,12 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.7.3] - 2026-08-28
+### Changed
+- Bumped `anthropic` 0.52.0 → 1.0.0, `openai` 1.93.0 → 3.3.1, `pandas` 2.2.3 → 3.0.5 (Dependabot PRs #32, #38, #37) — held pending real verification since these providers' tests fully mock their SDK clients.
+- Read each SDK's migration notes for the breaking changes in these jumps: anthropic 1.0's httpx2 migration, dropped legacy Text Completions API, and removed `temperature`/`top_p`/`top_k`; openai 3.0's httpx2 migration and 2.0's Responses-API output-type change. None touch this codebase's usage (plain `chat.completions.create()` / `messages.create()` calls with primitive kwargs, no raw httpx objects, no Responses/Bedrock/legacy-completions usage).
+- Confirmed field-for-field via each SDK's own Pydantic models that the response shapes this code reads (`ChatCompletion.choices`/`.usage.prompt_tokens`/`.completion_tokens`, `Message.content`/`.model`/`.usage.input_tokens`/`.output_tokens`) are unchanged, and ran the full test/mypy/ruff suite with all three new versions installed together.
+
 ## [1.7.2] - 2026-08-28
 ### Changed
 - Bumped `ollama` 0.4.8 → 0.6.2 (Dependabot PR #57). The provider's test suite fully mocks the `ollama` client, so this was verified with a real smoke test instead of a blind merge: confirmed `ollama.chat(model=..., messages=...)`'s keyword signature is unchanged, that its `ChatResponse`/`Message` types still support the dict-style `[...]`/`.get(...)` access this code relies on, and ran a live call against a local Ollama server end-to-end.
