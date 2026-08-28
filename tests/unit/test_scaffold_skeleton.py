@@ -79,7 +79,7 @@ def test_ensure_meerax_dependency_creates_when_missing(tmp_path):
     content = (tmp_path / "requirements.txt").read_text()
 
     assert status == "created"
-    assert "meerax @ git+https://github.com/mauryasameer/the-forge.git@v0.2.0" in content
+    assert "meerax==0.2.0" in content
 
 
 def test_ensure_meerax_dependency_appends_when_file_exists_without_it(tmp_path):
@@ -93,9 +93,7 @@ def test_ensure_meerax_dependency_appends_when_file_exists_without_it(tmp_path):
 
 
 def test_ensure_meerax_dependency_noop_when_already_present(tmp_path):
-    (tmp_path / "requirements.txt").write_text(
-        "meerax @ git+https://github.com/mauryasameer/the-forge.git@v0.1.0\n"
-    )
+    (tmp_path / "requirements.txt").write_text("meerax==0.1.0\n")
     status = ensure_meerax_dependency(tmp_path, "0.2.0")
 
     assert status == "unchanged"
