@@ -3,6 +3,17 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.3.0] - 2026-08-28
+### Added
+- `mypy` type checking wired into CI as its own required job. Fixed the ~19 real errors it found on first run: matplotlib's `Figure | SubFigure | None` typing on `plt.subplots()`/`ax.get_figure()` (narrowed with `assert isinstance(fig, plt.Figure)`), `Image.BICUBIC` → the properly-typed `Image.Resampling.BICUBIC`, and two genuine narrow-type gaps in the Claude/OpenAI providers' message-content handling and `usage`-can-be-`None` handling.
+- `pytest-cov` wired into CI with an 85% minimum coverage gate. Immediately found `meerax.viz.classification` and `meerax.viz.timeseries` had **zero** test coverage — the same untested-module pattern as `data.imbalance` from v1.0.1, just missed in the original audit. Added real tests for both; overall coverage is now 93%.
+- The reusable CI workflow now reports coverage for downstream apps too (`--cov=src`), though without an enforced threshold yet — both existing apps are already at 82-98%, but a blanket gate wasn't imposed without auditing what's realistically coverable there first (e.g. `@tf.function`-decorated training loops are notoriously coverage-tool-unfriendly).
+- A real `tests/integration/` suite for meerax itself, previously just an empty stub since v0.1.0: an eval → viz → report pipeline test (the README's own Quick Start example, exercised for real) and a scaffold → doctor round-trip test (a freshly `meerax new`'d or `meerax init`'d project, once given a LICENSE and CHANGELOG entry, passes every doctor check).
+
+Roadmap phase 3 (of the ecosystem audit) — quality hardening now that phase 2's enforcement layer exists.
+
+[1.3.0]: https://github.com/mauryasameer/the-forge/compare/v1.2.0...v1.3.0
+
 ## [1.2.0] - 2026-08-28
 ### Added
 - `.github/workflows/reusable-ci.yml` — the lint+test logic previously duplicated verbatim in every scaffolded project's `ci.yml` now lives in one place, called via `uses:`. Also runs `meerax doctor` as part of the test job.

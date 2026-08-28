@@ -13,6 +13,7 @@ def plot_confusion_matrix(
     ax: plt.Axes | None = None,
 ) -> plt.Figure:
     fig, ax = (ax.get_figure(), ax) if ax is not None else plt.subplots(figsize=(5, 4))
+    assert isinstance(fig, plt.Figure)
     im = ax.imshow(cm, cmap="YlGnBu", aspect="auto")
     ax.set_title(title)
     ticks = range(cm.shape[0])
@@ -39,10 +40,11 @@ def plot_roc_curve(
     ax: plt.Axes | None = None,
 ) -> plt.Figure:
     fig, ax = (ax.get_figure(), ax) if ax is not None else plt.subplots(figsize=(5, 4))
+    assert isinstance(fig, plt.Figure)
     ax.plot(fpr, tpr, color=MEERAX_CYBER, lw=2, label=f"AUC = {auc:.3f}")
     ax.plot([0, 1], [0, 1], color=MEERAX_ACCENT, lw=1, linestyle="--", label="Random")
-    ax.set_xlim([0.0, 1.0])
-    ax.set_ylim([0.0, 1.05])
+    ax.set_xlim(0.0, 1.0)
+    ax.set_ylim(0.0, 1.05)
     ax.set_xlabel("False Positive Rate")
     ax.set_ylabel("True Positive Rate")
     ax.set_title(title)

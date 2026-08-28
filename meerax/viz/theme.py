@@ -20,7 +20,7 @@ def apply_meerax_theme() -> None:
         "axes.labelcolor":    MEERAX_TEXT,
         "axes.titlecolor":    MEERAX_TEXT,
         "axes.grid":          True,
-        "axes.prop_cycle":    mpl.cycler(color=PALETTE),
+        "axes.prop_cycle":    mpl.cycler(color=PALETTE),  # type: ignore[attr-defined]
         "grid.color":         MEERAX_BORDER,
         "grid.linewidth":     0.6,
         "xtick.color":        MEERAX_MUTED,

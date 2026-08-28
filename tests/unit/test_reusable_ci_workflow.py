@@ -37,3 +37,9 @@ def test_reusable_ci_workflow_installs_pytest_for_test_job():
 def test_reusable_ci_workflow_runs_meerax_doctor():
     content = _content()
     assert "meerax doctor" in content
+
+
+def test_reusable_ci_workflow_reports_coverage():
+    content = _content()
+    assert "--cov=src" in content
+    assert "--cov-report=term-missing" in content

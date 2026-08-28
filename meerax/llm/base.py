@@ -3,6 +3,7 @@ from __future__ import annotations
 import base64
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from typing import Any
 
 
 @dataclass
@@ -43,7 +44,7 @@ class LLMProvider(ABC):
     @abstractmethod
     def chat(
         self,
-        messages: list[dict[str, str]],
+        messages: list[dict[str, Any]],
         system: str | None = None,
         **kwargs,
     ) -> LLMResponse:
