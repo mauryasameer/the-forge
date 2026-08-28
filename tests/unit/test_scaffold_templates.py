@@ -15,6 +15,13 @@ def test_ci_yml_calls_the_shared_reusable_workflow():
     assert "matrix" not in content
 
 
+def test_dependabot_yml_configures_pip_and_github_actions():
+    content = templates.dependabot_yml()
+    assert 'package-ecosystem: "pip"' in content
+    assert 'package-ecosystem: "github-actions"' in content
+    assert 'interval: "weekly"' in content
+
+
 def test_gitignore_ignores_src_data_contents():
     content = templates.gitignore()
     assert "src/data/*" in content

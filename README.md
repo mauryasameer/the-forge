@@ -1,6 +1,6 @@
 # meerax
 
-![Version](https://img.shields.io/badge/version-1.3.0-c8a96e)
+![Version](https://img.shields.io/badge/version-1.4.0-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.12-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
@@ -21,7 +21,7 @@ pip install meerax
 Or pin in `requirements.txt`:
 
 ```
-meerax==1.3.0
+meerax==1.4.0
 ```
 
 ## Modules
@@ -56,7 +56,8 @@ meerax init
 skeleton, pins `requirements.txt` to the current `meerax` release, and runs `git init`. The
 generated `ci.yml` calls this repo's [reusable CI workflow](.github/workflows/reusable-ci.yml)
 instead of embedding its own copy, so fixes to the shared CI logic reach every project that
-uses it without needing to be manually reapplied.
+uses it without needing to be manually reapplied. Also generates `.github/dependabot.yml`
+(pip + github-actions, weekly) so dependency pins don't quietly go stale.
 
 `meerax init` fills in whatever's missing from that same layout without touching files that
 already exist, and reports any top-level files it doesn't recognize (e.g. notebooks) so you can
@@ -64,7 +65,7 @@ move them into `src/` by hand.
 
 `meerax doctor` checks an existing project against PROJECT_STANDARDS.md — no Python version
 matrix, no committed `docs/specs`/`docs/plans`, a LICENSE file, VERSION/README/CHANGELOG
-consistency, and whether the project's `meerax` pin is current:
+consistency, Dependabot configured, and whether the project's `meerax` pin is current:
 
 ```bash
 cd ~/dev/my-project
@@ -141,7 +142,7 @@ the-forge/
 │   └── logging.py       # Structured logger
 ├── benchmarks/          # Standalone ML benchmark scripts
 ├── tests/
-│   ├── unit/            # 114 unit tests, zero external deps
+│   ├── unit/            # 117 unit tests, zero external deps
 │   └── integration/     # 3 cross-module pipeline tests
 ├── LICENSE
 ├── pyproject.toml

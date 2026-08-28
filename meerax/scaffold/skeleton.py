@@ -19,6 +19,7 @@ ALL_DIRS = [*GITKEEP_DIRS, "src/data", ".github/workflows"]
 MAIN_FILES = {
     "pyproject.toml": lambda name: templates.pyproject_toml(name),
     ".github/workflows/ci.yml": lambda name: templates.ci_yml(),
+    ".github/dependabot.yml": lambda name: templates.dependabot_yml(),
     ".gitignore": lambda name: templates.gitignore(),
     "conftest.py": lambda name: templates.conftest_py(),
     "README.md": lambda name: templates.readme_md(name),

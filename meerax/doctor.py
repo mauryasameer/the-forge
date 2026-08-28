@@ -94,6 +94,12 @@ def check_meerax_pin_freshness(root: Path) -> CheckResult:
     return CheckResult("meerax-pin-freshness", "pass", f"pinned to latest meerax=={latest}")
 
 
+def check_dependabot_present(root: Path) -> CheckResult:
+    if (root / ".github" / "dependabot.yml").exists():
+        return CheckResult("dependabot-present", "pass", "dependabot.yml found")
+    return CheckResult("dependabot-present", "warn", "no .github/dependabot.yml found")
+
+
 CHECKS = [
     check_single_python_version,
     check_no_planning_docs,
@@ -101,6 +107,7 @@ CHECKS = [
     check_version_consistency,
     check_changelog_entry,
     check_meerax_pin_freshness,
+    check_dependabot_present,
 ]
 
 

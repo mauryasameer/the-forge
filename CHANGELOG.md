@@ -3,6 +3,15 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.4.0] - 2026-08-28
+### Added
+- `.github/dependabot.yml` (pip + github-actions, weekly) — added to this repo, and to the `meerax new`/`meerax init` scaffold so every future project gets it automatically.
+- `meerax doctor` now checks for a Dependabot config too (warns, doesn't fail — not having one yet isn't a hard standards violation the way a missing LICENSE is).
+
+Closes the last item of roadmap phase 3 (of the ecosystem audit).
+
+[1.4.0]: https://github.com/mauryasameer/the-forge/compare/v1.3.0...v1.4.0
+
 ## [1.3.0] - 2026-08-28
 ### Added
 - `mypy` type checking wired into CI as its own required job. Fixed the ~19 real errors it found on first run: matplotlib's `Figure | SubFigure | None` typing on `plt.subplots()`/`ax.get_figure()` (narrowed with `assert isinstance(fig, plt.Figure)`), `Image.BICUBIC` → the properly-typed `Image.Resampling.BICUBIC`, and two genuine narrow-type gaps in the Claude/OpenAI providers' message-content handling and `usage`-can-be-`None` handling.

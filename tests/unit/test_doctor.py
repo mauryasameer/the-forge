@@ -135,3 +135,14 @@ def test_meerax_pin_freshness_warns_when_pypi_unreachable(tmp_path):
 def test_meerax_pin_freshness_warns_when_requirements_missing(tmp_path):
     result = _result(run_checks(tmp_path), "meerax-pin-freshness")
     assert result.status == "warn"
+
+
+def test_dependabot_present_passes_when_configured(tmp_path):
+    _write(tmp_path / ".github/dependabot.yml", "version: 2\n")
+    result = _result(run_checks(tmp_path), "dependabot-present")
+    assert result.status == "pass"
+
+
+def test_dependabot_present_warns_when_missing(tmp_path):
+    result = _result(run_checks(tmp_path), "dependabot-present")
+    assert result.status == "warn"
