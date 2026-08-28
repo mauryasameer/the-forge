@@ -1,6 +1,6 @@
 # meerax
 
-![Version](https://img.shields.io/badge/version-1.1.0-c8a96e)
+![Version](https://img.shields.io/badge/version-1.2.0-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.12-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
@@ -18,7 +18,7 @@ pip install meerax
 Or pin in `requirements.txt`:
 
 ```
-meerax==1.1.0
+meerax==1.2.0
 ```
 
 ## Modules
@@ -50,7 +50,10 @@ meerax init
 ```
 
 `meerax new` creates the full `src/{core,providers,services,utils,data}` + `tests/` + CI
-skeleton, pins `requirements.txt` to the current `meerax` release, and runs `git init`.
+skeleton, pins `requirements.txt` to the current `meerax` release, and runs `git init`. The
+generated `ci.yml` calls this repo's [reusable CI workflow](.github/workflows/reusable-ci.yml)
+instead of embedding its own copy, so fixes to the shared CI logic reach every project that
+uses it without needing to be manually reapplied.
 
 `meerax init` fills in whatever's missing from that same layout without touching files that
 already exist, and reports any top-level files it doesn't recognize (e.g. notebooks) so you can
@@ -135,7 +138,7 @@ the-forge/
 │   └── logging.py       # Structured logger
 ├── benchmarks/          # Standalone ML benchmark scripts
 ├── tests/
-│   └── unit/            # 102 unit tests, zero external deps
+│   └── unit/            # 106 unit tests, zero external deps
 ├── LICENSE
 ├── pyproject.toml
 ├── requirements.txt

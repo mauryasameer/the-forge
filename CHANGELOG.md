@@ -3,6 +3,15 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.2.0] - 2026-08-28
+### Added
+- `.github/workflows/reusable-ci.yml` — the lint+test logic previously duplicated verbatim in every scaffolded project's `ci.yml` now lives in one place, called via `uses:`. Also runs `meerax doctor` as part of the test job.
+- The `meerax new`/`meerax init` scaffold's generated `ci.yml` now calls this reusable workflow instead of embedding a full copy.
+
+Closes the other half of Phase 2 (of the ecosystem audit): a fix to the shared CI logic — like the missing-pytest-install bug fixed in v0.2.1 — now propagates to every project that uses it, instead of needing to be manually reapplied to each one.
+
+[1.2.0]: https://github.com/mauryasameer/the-forge/compare/v1.1.0...v1.2.0
+
 ## [1.1.0] - 2026-08-28
 ### Added
 - `meerax doctor` — checks a project against PROJECT_STANDARDS.md: no Python version matrix in CI, no committed `docs/specs`/`docs/plans`, LICENSE present, VERSION/README/CHANGELOG consistency, and whether the project's `meerax` pin is current with the latest PyPI release. Exits non-zero on any failing check, safe to run in CI.
