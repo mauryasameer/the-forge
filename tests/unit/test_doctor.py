@@ -137,8 +137,8 @@ def test_meerax_pin_freshness_warns_when_requirements_missing(tmp_path):
     assert result.status == "warn"
 
 
-def test_dependabot_present_passes_when_configured(tmp_path):
-    _write(tmp_path / ".github/dependabot.yml", "version: 2\n")
+def test_dependabot_present_passes_when_targeting_dev(tmp_path):
+    _write(tmp_path / ".github/dependabot.yml", 'version: 2\nupdates:\n  - target-branch: "dev"\n')
     result = _result(run_checks(tmp_path), "dependabot-present")
     assert result.status == "pass"
 
@@ -146,3 +146,10 @@ def test_dependabot_present_passes_when_configured(tmp_path):
 def test_dependabot_present_warns_when_missing(tmp_path):
     result = _result(run_checks(tmp_path), "dependabot-present")
     assert result.status == "warn"
+
+
+def test_dependabot_present_fails_when_not_targeting_dev(tmp_path):
+    _write(tmp_path / ".github/dependabot.yml", "version: 2\nupdates:\n  - package-ecosystem: pip\n")
+    result = _result(run_checks(tmp_path), "dependabot-present")
+    assert result.status == "fail"
+    assert "target-branch" in result.message
