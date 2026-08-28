@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
 import numpy as np
 
@@ -38,9 +39,9 @@ class ClassificationMetrics:
 
 
 def evaluate_classifier(
-    y_true: np.ndarray,
-    y_pred: np.ndarray,
-    y_prob: np.ndarray | None = None,
+    y_true: np.ndarray[Any, Any],
+    y_pred: np.ndarray[Any, Any],
+    y_prob: np.ndarray[Any, Any] | None = None,
     average: str = "binary",
 ) -> ClassificationMetrics:
     """Compute a standard classification metric bundle.

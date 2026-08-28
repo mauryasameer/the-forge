@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.axes import Axes
@@ -9,7 +11,7 @@ from meerax.viz.theme import MEERAX_ACCENT, MEERAX_CYBER
 
 
 def plot_confusion_matrix(
-    cm: np.ndarray,
+    cm: np.ndarray[Any, Any],
     labels: list[str] | None = None,
     title: str = "Confusion Matrix",
     ax: Axes | None = None,
@@ -35,8 +37,8 @@ def plot_confusion_matrix(
 
 
 def plot_roc_curve(
-    fpr: np.ndarray,
-    tpr: np.ndarray,
+    fpr: np.ndarray[Any, Any],
+    tpr: np.ndarray[Any, Any],
     auc: float,
     title: str = "ROC Curve",
     ax: Axes | None = None,

@@ -47,7 +47,7 @@ all = [
     "meerax[vision]",
     "meerax[parquet]",
 ]
-dev = ["pytest>=8", "pytest-mock>=3.12", "pytest-cov>=5", "ruff==0.11.13", "mypy>=1.10"]
+dev = ["pytest>=8", "pytest-mock>=3.12", "pytest-cov>=5", "ruff==0.16.4", "mypy>=1.10"]
 
 [tool.setuptools.dynamic]
 version = { file = "VERSION" }
@@ -62,12 +62,15 @@ line-length = 120
 
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "UP", "B", "PIE", "PLC"]
-ignore = ["E501", "B008", "PIE790"]
+# PLC0415 (import not at top-level) is disabled project-wide: lazy imports here are a
+# deliberate pattern for avoiding eager loading of heavy/conflicting ML dependencies
+# (torch, tensorflow, anthropic, openai, ollama, sklearn, statsmodels, nltk, imblearn) -
+# see meerax/vision/gridplot.py's docstring for the torch/TensorFlow segfault this avoids.
+ignore = ["E501", "B008", "PIE790", "PLC0415"]
 
 [tool.ruff.lint.per-file-ignores]
-"benchmarks/*" = ["PLC0415", "T201"]
-"tests/*"      = ["S101", "PLC0415"]
-"conftest.py"  = ["PLC0415"]
+"benchmarks/*" = ["T201"]
+"tests/*"      = ["S101"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
