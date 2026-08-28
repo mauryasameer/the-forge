@@ -7,6 +7,7 @@ from pathlib import Path
 
 import meerax
 from meerax.doctor import run_checks
+from meerax.release import bump_version
 from meerax.scaffold.skeleton import create_tree, ensure_meerax_dependency, retrofit_tree
 
 _STATUS_ICON = {"pass": "✓", "warn": "!", "fail": "✗"}
@@ -62,6 +63,20 @@ def cmd_doctor(args: argparse.Namespace) -> int:
     return 1 if failures else 0
 
 
+def cmd_bump(args: argparse.Namespace) -> int:
+    root = Path(args.path)
+    if not root.exists():
+        print(f"error: {root} does not exist", file=sys.stderr)
+        return 1
+    try:
+        summary = bump_version(root, args.version)
+    except ValueError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    print(summary)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="meerax")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -78,6 +93,11 @@ def build_parser() -> argparse.ArgumentParser:
     doctor_parser = subparsers.add_parser("doctor", help="check a project against PROJECT_STANDARDS.md")
     doctor_parser.add_argument("--path", default=".")
     doctor_parser.set_defaults(func=cmd_doctor)
+
+    bump_parser = subparsers.add_parser("bump", help="bump VERSION, README badge, and CHANGELOG heading")
+    bump_parser.add_argument("version")
+    bump_parser.add_argument("--path", default=".")
+    bump_parser.set_defaults(func=cmd_bump)
 
     return parser
 

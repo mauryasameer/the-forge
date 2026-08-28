@@ -3,9 +3,19 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.5.0] - 2026-08-28
+### Added
+- `ARCHITECTURE.md` — documents the provider-abstraction pattern, the `src/{core,providers,services}` layering, why meerax exists, and why the standards-enforcement layer (`meerax doctor` + the reusable CI workflow) exists.
+- `SECURITY.md` — API key handling, dependency-update review guidance, reporting.
+- `meerax bump <version>` — updates VERSION, the README version badge, and inserts a dated CHANGELOG heading in one step. Doesn't write CHANGELOG content or a compare-link footer, since only a human (or an AI assistant) who knows what changed can write those honestly. Used to bump this very release.
+
+Roadmap phase 4 (of the ecosystem audit) — the last phase, closing out the "make future apps cheaper to build" goal. The one item not shipped here — an opt-in `--template` for the recurring "provider-swap service + HTML report" shape — is being built separately as its own real, runnable example rather than speculative stub code.
+
+[1.5.0]: https://github.com/mauryasameer/the-forge/compare/v1.4.1...v1.5.0
+
 ## [1.4.1] - 2026-08-28
 ### Fixed
-- The scaffold's generated `dependabot.yml` didn't set `target-branch`, so Dependabot defaulted to opening PRs against `main` directly — violating this ecosystem's PR-into-dev-only convention. All 17 PRs Dependabot opened across the three repos on first scan had to be retargeted by hand.
+- The scaffold's generated `dependabot.yml` didn't set `target-branch`, so Dependabot defaulted to opening PRs against `main` directly — violating this ecosystem's PR-into-dev-only convention. All 17 PRs Dependabot opened across the three repos on first scan had to be retargeted by hand — and even after retargeting, asking Dependabot to `@dependabot rebase` silently reset several of them back to `main`, so 8 dependency bumps landed there directly before this was caught. Recovered by merging `main`'s extra commits back into `dev`. Lesson: don't use Dependabot's own rebase command to fix a PR whose base you changed by hand — it appears to re-derive the target branch from the update branch's own stale config rather than the current one.
 
 [1.4.1]: https://github.com/mauryasameer/the-forge/compare/v1.4.0...v1.4.1
 
