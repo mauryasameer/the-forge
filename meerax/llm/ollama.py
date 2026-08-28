@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 from meerax.llm.base import LLMProvider, LLMResponse, encode_image
 
 
@@ -35,7 +37,7 @@ class OllamaProvider(LLMProvider):
 
     def chat(
         self,
-        messages: list[dict[str, str]],
+        messages: list[dict[str, Any]],
         system: str | None = None,
         **kwargs,
     ) -> LLMResponse:

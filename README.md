@@ -1,6 +1,6 @@
 # meerax
 
-![Version](https://img.shields.io/badge/version-1.2.0-c8a96e)
+![Version](https://img.shields.io/badge/version-1.3.0-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.12-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
@@ -8,6 +8,9 @@ Shared ML utilities — LLM providers, evaluation metrics, visualization, and re
 Used as an in-house dependency across all of Sameer Maurya's ML projects and organization.
 Source repo: [the-forge](https://github.com/mauryasameer/the-forge) — kept its original name;
 only the installable package was renamed to `meerax`.
+
+CI gates on mypy (strict, zero ignored errors) and a minimum 85% test coverage — both enforced
+on every PR, not just checked locally.
 
 ## Install
 
@@ -18,7 +21,7 @@ pip install meerax
 Or pin in `requirements.txt`:
 
 ```
-meerax==1.2.0
+meerax==1.3.0
 ```
 
 ## Modules
@@ -138,7 +141,8 @@ the-forge/
 │   └── logging.py       # Structured logger
 ├── benchmarks/          # Standalone ML benchmark scripts
 ├── tests/
-│   └── unit/            # 106 unit tests, zero external deps
+│   ├── unit/            # 114 unit tests, zero external deps
+│   └── integration/     # 3 cross-module pipeline tests
 ├── LICENSE
 ├── pyproject.toml
 ├── requirements.txt

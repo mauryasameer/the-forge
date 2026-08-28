@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from typing import Any
 
 from meerax.llm.base import LLMProvider, LLMResponse, encode_image
 
@@ -34,22 +35,25 @@ class ClaudeProvider(LLMProvider):
         images: list[bytes] | None = None,
         **kwargs,
     ) -> LLMResponse:
+        content: str | list[dict[str, Any]]
         if images:
-            content: str | list[dict] = [
+            blocks: list[dict[str, Any]] = [
                 {
                     "type": "image",
                     "source": {"type": "base64", "media_type": "image/png", "data": encode_image(img)},
                 }
                 for img in images
             ]
-            content.append({"type": "text", "text": prompt})
+            blocks.append({"type": "text", "text": prompt})
+            content = blocks
         else:
             content = prompt
-        return self.chat([{"role": "user", "content": content}], system=system, **kwargs)
+        messages: list[dict[str, Any]] = [{"role": "user", "content": content}]
+        return self.chat(messages, system=system, **kwargs)
 
     def chat(
         self,
-        messages: list[dict[str, str]],
+        messages: list[dict[str, Any]],
         system: str | None = None,
         **kwargs,
     ) -> LLMResponse:

@@ -44,6 +44,6 @@ class ImageFolderDataset(Dataset):
 
     def __getitem__(self, idx: int) -> torch.Tensor:
         image = Image.open(self.paths[idx]).resize(
-            (self.image_size, self.image_size), Image.BICUBIC
+            (self.image_size, self.image_size), Image.Resampling.BICUBIC
         )
         return normalize(image)
