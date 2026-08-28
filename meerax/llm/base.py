@@ -36,7 +36,7 @@ class LLMProvider(ABC):
         prompt: str,
         system: str | None = None,
         images: list[bytes] | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> LLMResponse:
         """Single-turn generation from a plain prompt string, optionally with images (raw PNG bytes)."""
         ...
@@ -46,7 +46,7 @@ class LLMProvider(ABC):
         self,
         messages: list[dict[str, Any]],
         system: str | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> LLMResponse:
         """Multi-turn generation from an OpenAI-style message list."""
         ...

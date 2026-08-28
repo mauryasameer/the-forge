@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.figure import Figure
 
 from meerax.viz.theme import apply_meerax_theme
 
@@ -28,7 +29,7 @@ def _to_display_array(image: torch.Tensor | np.ndarray) -> np.ndarray:
     return array
 
 
-def plot_translation_grid(rows: list[tuple[str, torch.Tensor | np.ndarray]]) -> plt.Figure:
+def plot_translation_grid(rows: list[tuple[str, torch.Tensor | np.ndarray]]) -> Figure:
     """Plot a row of labeled images side by side.
 
     Each item is (label, image), where image is either:

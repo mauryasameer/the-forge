@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
+from typing import Any
 
 import pandas as pd
 
@@ -11,7 +12,7 @@ logger = logging.getLogger(__name__)
 def load_csv(
     path: str | Path,
     required_columns: list[str] | None = None,
-    dtype: dict | None = None,
+    dtype: Any = None,
 ) -> pd.DataFrame:
     """Load a CSV with optional schema validation.
 
