@@ -1,6 +1,6 @@
 # meerax
 
-![Version](https://img.shields.io/badge/version-1.5.0-c8a96e)
+![Version](https://img.shields.io/badge/version-1.6.0-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.12-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
@@ -21,7 +21,7 @@ pip install meerax
 Or pin in `requirements.txt`:
 
 ```
-meerax==1.5.0
+meerax==1.6.0
 ```
 
 ## Modules
@@ -58,6 +58,17 @@ generated `ci.yml` calls this repo's [reusable CI workflow](.github/workflows/re
 instead of embedding its own copy, so fixes to the shared CI logic reach every project that
 uses it without needing to be manually reapplied. Also generates `.github/dependabot.yml`
 (pip + github-actions, weekly) so dependency pins don't quietly go stale.
+
+Both `new` and `init` accept `--template llm-report`, which adds a real, runnable example on
+top of the bare skeleton — the "call an LLM, build an HTML report" shape that's shown up twice
+already (trend-whisperer, pixel-drift). It's genuinely functional code with real tests, not
+stub methods to fill in:
+
+```bash
+meerax new my-app --template llm-report
+cd my-app && pip install -r requirements.txt
+python -m src.app --prompt "Summarize this quarter's churn" --llm-provider ollama
+```
 
 `meerax init` fills in whatever's missing from that same layout without touching files that
 already exist, and reports any top-level files it doesn't recognize (e.g. notebooks) so you can
@@ -154,8 +165,8 @@ the-forge/
 │   └── logging.py       # Structured logger
 ├── benchmarks/          # Standalone ML benchmark scripts
 ├── tests/
-│   ├── unit/            # 131 unit tests, zero external deps
-│   └── integration/     # 3 cross-module pipeline tests
+│   ├── unit/            # 137 unit tests, zero external deps
+│   └── integration/     # 4 cross-module pipeline tests
 ├── ARCHITECTURE.md
 ├── SECURITY.md
 ├── LICENSE
