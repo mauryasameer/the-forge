@@ -3,6 +3,10 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.7.2] - 2026-08-28
+### Changed
+- Bumped `ollama` 0.4.8 → 0.6.2 (Dependabot PR #57). The provider's test suite fully mocks the `ollama` client, so this was verified with a real smoke test instead of a blind merge: confirmed `ollama.chat(model=..., messages=...)`'s keyword signature is unchanged, that its `ChatResponse`/`Message` types still support the dict-style `[...]`/`.get(...)` access this code relies on, and ran a live call against a local Ollama server end-to-end.
+
 ## [1.7.1] - 2026-08-28
 ### Changed
 - Bumped `ruff` 0.11.13 → 0.16.4, `pyarrow` 20.0.0 → 25.0.1, `pytest-mock` 3.14.1 → 3.15.1 (Dependabot PRs #54, #55, #56).
