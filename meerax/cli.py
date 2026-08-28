@@ -6,7 +6,10 @@ import sys
 from pathlib import Path
 
 import meerax
+from meerax.doctor import run_checks
 from meerax.scaffold.skeleton import create_tree, ensure_meerax_dependency, retrofit_tree
+
+_STATUS_ICON = {"pass": "✓", "warn": "!", "fail": "✗"}
 
 
 def cmd_new(args: argparse.Namespace) -> int:
@@ -47,6 +50,18 @@ def cmd_init(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_doctor(args: argparse.Namespace) -> int:
+    root = Path(args.path)
+    results = run_checks(root)
+    for result in results:
+        icon = _STATUS_ICON[result.status]
+        print(f"  {icon} {result.name}: {result.message}")
+    failures = [r for r in results if r.status == "fail"]
+    warnings = [r for r in results if r.status == "warn"]
+    print(f"{len(results) - len(failures) - len(warnings)} passed, {len(warnings)} warned, {len(failures)} failed")
+    return 1 if failures else 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="meerax")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -59,6 +74,10 @@ def build_parser() -> argparse.ArgumentParser:
     init_parser = subparsers.add_parser("init", help="retrofit an existing project")
     init_parser.add_argument("--path", default=".")
     init_parser.set_defaults(func=cmd_init)
+
+    doctor_parser = subparsers.add_parser("doctor", help="check a project against PROJECT_STANDARDS.md")
+    doctor_parser.add_argument("--path", default=".")
+    doctor_parser.set_defaults(func=cmd_doctor)
 
     return parser
 

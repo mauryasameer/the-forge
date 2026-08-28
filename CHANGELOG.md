@@ -3,6 +3,14 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.1.0] - 2026-08-28
+### Added
+- `meerax doctor` — checks a project against PROJECT_STANDARDS.md: no Python version matrix in CI, no committed `docs/specs`/`docs/plans`, LICENSE present, VERSION/README/CHANGELOG consistency, and whether the project's `meerax` pin is current with the latest PyPI release. Exits non-zero on any failing check, safe to run in CI.
+
+This is Phase 2 of the ecosystem audit's roadmap — closing the gap where standards drift (stale Python-version matrices, leaked planning docs, stale dependency pins) was only ever caught by manual review, never by any repo's own CI.
+
+[1.1.0]: https://github.com/mauryasameer/the-forge/compare/v1.0.1...v1.1.0
+
 ## [1.0.1] - 2026-08-28
 ### Fixed
 - Scaffold's `ensure_meerax_dependency()` still templated a `git+https://...` dependency line for newly scaffolded projects — stale now that `meerax` is genuinely on PyPI. New projects now get a plain `meerax==<version>` pin.

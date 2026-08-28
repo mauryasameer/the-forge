@@ -1,6 +1,6 @@
 # meerax
 
-![Version](https://img.shields.io/badge/version-1.0.1-c8a96e)
+![Version](https://img.shields.io/badge/version-1.1.0-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.12-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
@@ -12,16 +12,14 @@ only the installable package was renamed to `meerax`.
 ## Install
 
 ```bash
-pip install git+https://github.com/mauryasameer/the-forge.git@v1.0.0
+pip install meerax
 ```
 
 Or pin in `requirements.txt`:
 
 ```
-meerax @ git+https://github.com/mauryasameer/the-forge.git@v1.0.0
+meerax==1.1.0
 ```
-
-Once published to PyPI, this becomes `pip install meerax` / `meerax==1.0.0`.
 
 ## Modules
 
@@ -57,6 +55,17 @@ skeleton, pins `requirements.txt` to the current `meerax` release, and runs `git
 `meerax init` fills in whatever's missing from that same layout without touching files that
 already exist, and reports any top-level files it doesn't recognize (e.g. notebooks) so you can
 move them into `src/` by hand.
+
+`meerax doctor` checks an existing project against PROJECT_STANDARDS.md — no Python version
+matrix, no committed `docs/specs`/`docs/plans`, a LICENSE file, VERSION/README/CHANGELOG
+consistency, and whether the project's `meerax` pin is current:
+
+```bash
+cd ~/dev/my-project
+meerax doctor
+```
+
+Exits non-zero if anything fails, so it's safe to run in CI.
 
 ## Quick Start
 
@@ -120,12 +129,13 @@ the-forge/
 │   ├── data/            # Data loading, splitting, resampling
 │   ├── report/          # HTML report builder
 │   ├── scaffold/        # Project skeleton templates + create/retrofit logic
-│   ├── cli.py           # `meerax new` / `meerax init` command entry point
+│   ├── cli.py           # `meerax new` / `init` / `doctor` command entry point
+│   ├── doctor.py        # PROJECT_STANDARDS.md compliance checks
 │   ├── vision/          # Image dataset loader + translation-grid plotting
 │   └── logging.py       # Structured logger
 ├── benchmarks/          # Standalone ML benchmark scripts
 ├── tests/
-│   └── unit/            # 80 unit tests, zero external deps
+│   └── unit/            # 102 unit tests, zero external deps
 ├── LICENSE
 ├── pyproject.toml
 ├── requirements.txt
