@@ -19,7 +19,7 @@ nltk==3.10.3
 imbalanced-learn==0.14.2
 
 # Parquet support
-pyarrow==20.0.0
+pyarrow==25.0.1
 
 # Dev / CI
 ruff==0.11.13
