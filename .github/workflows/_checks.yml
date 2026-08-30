@@ -29,7 +29,7 @@ jobs:
         run: |
           pip install numpy pandas matplotlib scikit-learn statsmodels nltk imbalanced-learn pillow anthropic openai ollama
           pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
-          pip install "mypy>=1.10" pandas-stubs
+          pip install "mypy==2.3.1" pandas-stubs
       - run: mypy meerax
 
   test:

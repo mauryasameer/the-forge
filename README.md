@@ -1,6 +1,6 @@
 # meerax
 
-![Version](https://img.shields.io/badge/version-1.7.3-c8a96e)
+![Version](https://img.shields.io/badge/version-1.7.4-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.12-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
@@ -22,7 +22,7 @@ pip install meerax
 Or pin in `requirements.txt`:
 
 ```
-meerax==1.7.3
+meerax==1.7.4
 ```
 
 ## Modules
