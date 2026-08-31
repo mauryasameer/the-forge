@@ -3,6 +3,13 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.8.0] - 2026-08-31
+### Added
+- `benchmarks/meerax_benchmark.py` — benchmarks meerax's own core operations (CSV loading, stratified/time splitting, classification and timeseries eval metrics, HTML report generation) across representative sizes. The previous sole benchmark (`kv_cache_benchmark.py`) is a generic educational demo that doesn't import `meerax` at all and was never run in CI — this one exercises the package's own code paths.
+- `--record` flag appends one JSON line per run to `benchmarks/results/history.jsonl`, keyed by the installed `meerax` version, so performance can be tracked and compared release to release. Intended to be run alongside `meerax bump` as part of cutting a release.
+- `.github/workflows/benchmarks.yml` — runs the benchmark on demand (`workflow_dispatch` only, not on every push/PR) and uploads results as a build artifact. Deliberately not a required check: wall-clock timings on shared CI runners are too noisy to gate merges on.
+- 9 new unit tests covering every benchmark function at a tiny scale plus the `--record` JSONL-append behavior.
+
 ## [1.7.4] - 2026-08-30
 ### Changed
 - Pinned `mypy` to an exact version (`mypy==2.3.1`, was `mypy>=1.10`) in both `pyproject.toml`'s dev extra and `_checks.yml`. An unpinned floor is a reproducibility hazard the same way an unpinned `ruff` would be — this session saw 3 different (interpreter, mypy-version) combinations produce inconsistent verdicts on the same code, though the root cause traced back to the wrong Python interpreter rather than mypy's version itself. Pinning removes one variable from that kind of investigation going forward.

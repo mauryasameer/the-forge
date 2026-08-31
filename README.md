@@ -1,6 +1,6 @@
 # meerax
 
-![Version](https://img.shields.io/badge/version-1.7.4-c8a96e)
+![Version](https://img.shields.io/badge/version-1.8.0-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.12-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
@@ -22,7 +22,7 @@ pip install meerax
 Or pin in `requirements.txt`:
 
 ```
-meerax==1.7.4
+meerax==1.8.0
 ```
 
 ## Modules
@@ -146,7 +146,21 @@ Self-contained benchmark scripts in `benchmarks/`:
 
 | Script | Description |
 |---|---|
+| `meerax_benchmark.py` | Times meerax's own core operations — CSV loading, data splitting, classification/timeseries eval metrics, HTML report generation — across representative sizes |
 | `kv_cache_benchmark.py` | KV caching simulation at GPT-2 Medium scale |
+
+```bash
+python benchmarks/meerax_benchmark.py            # print results
+python benchmarks/meerax_benchmark.py --record   # also append to benchmarks/results/history.jsonl
+```
+
+`--record` appends one JSON line per run, keyed by the installed `meerax` version, so
+performance can be compared release to release. Run it as part of cutting a release,
+alongside `meerax bump`, and commit the updated `history.jsonl` in the same commit. A
+GitHub Actions workflow (`.github/workflows/benchmarks.yml`) also runs it on demand
+(`workflow_dispatch`) and uploads the results as a build artifact — informational only,
+not a required CI check, since wall-clock timings on shared runners are too noisy to
+gate on.
 
 ## Project Structure
 
@@ -164,9 +178,10 @@ the-forge/
 │   ├── release.py       # VERSION/README badge/CHANGELOG bump helper
 │   ├── vision/          # Image dataset loader + translation-grid plotting
 │   └── logging.py       # Structured logger
-├── benchmarks/          # Standalone ML benchmark scripts
+├── benchmarks/          # meerax's own perf benchmarks + standalone ML demo scripts
+│   └── results/         # history.jsonl — one line per --record run, tracked across releases
 ├── tests/
-│   ├── unit/            # 143 unit tests, zero external deps
+│   ├── unit/            # 152 unit tests, zero external deps
 │   └── integration/     # 4 cross-module pipeline tests
 ├── ARCHITECTURE.md
 ├── SECURITY.md

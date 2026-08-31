@@ -33,3 +33,10 @@ def test_release_workflow_depends_on_checks_before_publishing():
     content = _content("release.yml")
     assert "uses: ./.github/workflows/_checks.yml" in content
     assert "needs: checks" in content
+
+
+def test_benchmarks_workflow_is_manual_only_not_a_required_check():
+    content = _content("benchmarks.yml")
+    assert "workflow_dispatch" in content
+    assert "push:" not in content
+    assert "pull_request:" not in content
