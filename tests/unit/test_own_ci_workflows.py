@@ -17,10 +17,11 @@ def test_checks_workflow_runs_both_unit_and_integration_tests():
     assert "tests/integration/" in content
 
 
-def test_checks_workflow_quotes_mypy_version_pin():
+def test_checks_workflow_pins_mypy_to_an_exact_version():
     content = _content("_checks.yml")
-    assert '"mypy>=1.10"' in content
-    assert "pip install mypy>=1.10" not in content
+    assert '"mypy==2.3.1"' in content
+    assert "pip install mypy==2.3.1" not in content
+    assert ">=1.10" not in content
 
 
 def test_ci_workflow_calls_shared_checks():

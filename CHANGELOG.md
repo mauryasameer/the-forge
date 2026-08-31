@@ -3,6 +3,11 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.7.4] - 2026-08-30
+### Changed
+- Pinned `mypy` to an exact version (`mypy==2.3.1`, was `mypy>=1.10`) in both `pyproject.toml`'s dev extra and `_checks.yml`. An unpinned floor is a reproducibility hazard the same way an unpinned `ruff` would be — this session saw 3 different (interpreter, mypy-version) combinations produce inconsistent verdicts on the same code, though the root cause traced back to the wrong Python interpreter rather than mypy's version itself. Pinning removes one variable from that kind of investigation going forward.
+- Removed a stray, fully-merged local git worktree (`.claude/worktrees/vision-module`, branch `fix/version-string`, merged as PR #8 back in the v0.3.0 era) that had been silently polluting broad local `ruff check .` runs with findings from stale, disconnected code.
+
 ## [1.7.3] - 2026-08-28
 ### Changed
 - Bumped `anthropic` 0.52.0 → 1.0.0, `openai` 1.93.0 → 3.3.1, `pandas` 2.2.3 → 3.0.5 (Dependabot PRs #32, #38, #37) — held pending real verification since these providers' tests fully mock their SDK clients.
