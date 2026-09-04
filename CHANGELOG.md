@@ -3,6 +3,12 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.9.1] - 2026-09-05
+### Changed
+- Bumped `ruff` 0.16.4 → 0.16.5, `statsmodels` 0.14.6 → 0.15.0, `openai` 3.3.1 → 3.6.0, `anthropic` 1.0.0 → 1.2.0 (Dependabot PRs #71-#74).
+- statsmodels 0.15.0 raises its own minimum NumPy/SciPy/pandas versions and tightens input validation; verified `seasonal_decompose` (already covered by a real, non-mocked test) and `adf_stationarity`/`adfuller` (previously **zero** test coverage — added 2 new tests exercising it against real generated data) both behave correctly.
+- `adf_stationarity` now passes `result_object=False` explicitly to `adfuller()`, silencing a `FutureWarning` about a return-shape change coming in statsmodels 0.16 — surfaced while verifying this bump, unrelated to it directly but cheap to fix here.
+
 ## [1.9.0] - 2026-09-04
 ### Changed
 - Lowered `requires-python` from `>=3.12` to `>=3.10` — a user hit `pip install meerax` failing outright on an older system since every published release excluded anything below 3.12. `[tool.ruff] target-version` dropped to `"py310"` to match (so pyupgrade stops suggesting 3.11+-only syntax like the `datetime.UTC` alias).
