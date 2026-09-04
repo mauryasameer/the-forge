@@ -53,7 +53,7 @@ def adf_stationarity(series: np.ndarray[Any, Any]) -> dict[str, float | bool]:
     """Augmented Dickey-Fuller test. Returns p-value and stationarity decision."""
     from statsmodels.tsa.stattools import adfuller
 
-    result = adfuller(series, autolag="AIC")
+    result = adfuller(series, autolag="AIC", result_object=False)
     return {
         "adf_stat": float(result[0]),
         "p_value": float(result[1]),
