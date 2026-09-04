@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from meerax.eval.timeseries import evaluate_forecast
+from meerax.eval.timeseries import adf_stationarity, evaluate_forecast
 
 
 def test_perfect_forecast():
@@ -31,3 +31,18 @@ def test_to_dict_keys():
     y = np.ones(5)
     d = evaluate_forecast(y, y).to_dict()
     assert set(d.keys()) == {"rmse", "mae", "mape", "smape"}
+
+
+def test_adf_stationarity_returns_expected_keys():
+    rng = np.random.default_rng(0)
+    series = rng.standard_normal(200).cumsum()
+    result = adf_stationarity(series)
+    assert set(result.keys()) == {"adf_stat", "p_value", "is_stationary", "critical_1pct", "critical_5pct"}
+    assert isinstance(result["is_stationary"], bool)
+
+
+def test_adf_stationarity_detects_stationary_series():
+    rng = np.random.default_rng(0)
+    series = rng.standard_normal(200)
+    result = adf_stationarity(series)
+    assert result["is_stationary"] is True
