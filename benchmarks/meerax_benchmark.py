@@ -20,7 +20,7 @@ import platform
 import sys
 import tempfile
 import time
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -153,7 +153,7 @@ def record_results(results: dict[str, dict[str, float]]) -> None:
     HISTORY_PATH.parent.mkdir(parents=True, exist_ok=True)
     entry = {
         "meerax_version": meerax.__version__,
-        "timestamp": datetime.now(UTC).isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "python_version": platform.python_version(),
         "platform": platform.platform(),
         "results": results,
