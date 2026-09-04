@@ -3,6 +3,17 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.9.0] - 2026-09-04
+### Changed
+- Lowered `requires-python` from `>=3.12` to `>=3.10` — a user hit `pip install meerax` failing outright on an older system since every published release excluded anything below 3.12. `[tool.ruff] target-version` dropped to `"py310"` to match (so pyupgrade stops suggesting 3.11+-only syntax like the `datetime.UTC` alias).
+- Fixed the one real blocker: `meerax/scaffold/skeleton.py` was missing `from __future__ import annotations`, so its `str | None` parameter annotations evaluated at import time and required Python 3.10+ (PEP 604). Every other file in the package either already had the future import or didn't use the `|` union operator at runtime.
+- `benchmarks/meerax_benchmark.py`'s `--record` timestamp reverted from `datetime.UTC` (3.11+) to `datetime.timezone.utc`, since the dev tooling should work on the same floor as the package.
+
+### Verification
+- CI itself still runs and is gated on Python 3.12 only, per standing single-Python-version-in-CI policy — this is a packaging-metadata change, not a CI matrix.
+- Tried setting `[tool.mypy] python_version = "3.10"` to statically enforce the new floor without a CI matrix, but reverted it: numpy's own bundled stub file uses a Python-3.12-only `type` statement unconditionally, so mypy can't type-check third-party stubs against an older target here. Kept `python_version = "3.12"`.
+- Instead, verified for real: created fresh venvs on actual Python 3.10.21, 3.11.16, and 3.12.13, installed `meerax[all,dev]` into each from source, and ran the full test suite (156 tests) — all green on all three. Also smoke-tested `meerax new`/`meerax doctor` end-to-end on 3.10.
+
 ## [1.8.0] - 2026-08-31
 ### Added
 - `benchmarks/meerax_benchmark.py` — benchmarks meerax's own core operations (CSV loading, stratified/time splitting, classification and timeseries eval metrics, HTML report generation) across representative sizes. The previous sole benchmark (`kv_cache_benchmark.py`) is a generic educational demo that doesn't import `meerax` at all and was never run in CI — this one exercises the package's own code paths.
