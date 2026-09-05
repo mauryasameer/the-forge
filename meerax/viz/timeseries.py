@@ -37,7 +37,7 @@ def plot_decomposition(
     fig, axes = plt.subplots(4, 1, figsize=(10, 8), sharex=True)
     components = [result.observed, result.trend, result.seasonal, result.resid]
     labels = ["Observed", "Trend", "Seasonal", "Residual"]
-    for ax, data, label in zip(axes, components, labels, strict=False):
+    for ax, data, label in zip(axes, components, labels):
         ax.plot(data, color=MEERAX_CYBER, lw=1.2)
         ax.set_ylabel(label, fontsize=8)
     fig.suptitle(title)

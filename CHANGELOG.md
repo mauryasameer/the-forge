@@ -3,6 +3,17 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.10.0] - 2026-09-05
+### Changed
+- Lowered `requires-python` from `>=3.10` to `>=3.9` — v1.9.0's fix wasn't enough: the reporting system was still on Python 3.9, one version below the new floor, and `pip install meerax` kept failing with the same error, just against a shorter list of excluded releases.
+- `[tool.ruff] target-version` dropped to `"py39"` to match.
+- Found the real, hard blocker this time by actually testing on a real Python 3.9 venv instead of just grepping for syntax: `zip(..., strict=...)` — the `strict=` keyword was added in Python 3.10 (PEP 618) and has no future-annotations-style workaround. Removed it from the 2 call sites in `meerax/vision/gridplot.py` and `meerax/viz/timeseries.py` (both pair iterables of statically-guaranteed-equal length, so dropping `strict=` doesn't weaken anything) and from 2 test call sites. Added `B905` (ruff's "zip without strict=" rule) to the project-wide ignore list, since the rule's own suggested fix isn't available below 3.10.
+- Also found that `statsmodels` itself dropped Python 3.9 support at 0.15.0 — on 3.9, pip resolves 0.14.6, which doesn't have the `result_object` kwarg added in v1.9.1's `adf_stationarity` fix. Made that fix version-agnostic instead of version-specific: wrapped the `adfuller()` call in `warnings.catch_warnings()` with `simplefilter("ignore", FutureWarning)` rather than passing `result_object=False`, so it works whether the installed statsmodels has that kwarg or not.
+
+### Verification
+- This time, verified on all four supported versions before calling it done: real Python 3.9.25, 3.10.21, 3.11.16, and 3.12.13 venvs (`brew install python@3.9` — the previous pass never actually tried 3.9), full test suite (158 tests) green on every one, plus ruff/mypy clean on the 3.12 primary target.
+- Lesson for next time a floor-lowering bug report comes back: verify on the exact reported Python version, not just "one version below the previous floor" — ask for `python3 --version` output before re-shipping a fix for the same bug.
+
 ## [1.9.1] - 2026-09-05
 ### Changed
 - Bumped `ruff` 0.16.4 → 0.16.5, `statsmodels` 0.14.6 → 0.15.0, `openai` 3.3.1 → 3.6.0, `anthropic` 1.0.0 → 1.2.0 (Dependabot PRs #71-#74).

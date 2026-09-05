@@ -41,7 +41,7 @@ def plot_translation_grid(rows: list[tuple[str, torch.Tensor | np.ndarray[Any, A
     fig, axes = plt.subplots(1, len(rows), figsize=(4 * len(rows), 4))
     if len(rows) == 1:
         axes = [axes]
-    for ax, (label, image) in zip(axes, rows, strict=True):
+    for ax, (label, image) in zip(axes, rows):
         ax.imshow(_to_display_array(image))
         ax.set_title(label)
         ax.axis("off")
