@@ -1,7 +1,7 @@
 # meerax
 
-![Version](https://img.shields.io/badge/version-1.9.1-c8a96e)
-![Python](https://img.shields.io/badge/python-3.10%2B-00e5cc)
+![Version](https://img.shields.io/badge/version-1.10.0-c8a96e)
+![Python](https://img.shields.io/badge/python-3.9%2B-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
 Shared ML utilities — LLM providers, evaluation metrics, visualization, and report generation.
@@ -13,9 +13,9 @@ CI gates on mypy (`strict = true`, with 2 narrowly-scoped `# type: ignore` excep
 third-party stub gaps) and a minimum 85% test coverage — both enforced on every PR, not just
 checked locally.
 
-Supports Python 3.10+ (`requires-python = ">=3.10"`). CI itself runs and is verified against
+Supports Python 3.9+ (`requires-python = ">=3.9"`). CI itself runs and is verified against
 Python 3.12 only — no version matrix — but installs and the full test suite have been manually
-verified clean on 3.10, 3.11, and 3.12 before each release that touches this floor.
+verified clean on 3.9, 3.10, 3.11, and 3.12 before each release that touches this floor.
 
 ## Install
 
@@ -26,7 +26,7 @@ pip install meerax
 Or pin in `requirements.txt`:
 
 ```
-meerax==1.9.1
+meerax==1.10.0
 ```
 
 ## Modules

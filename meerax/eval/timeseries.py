@@ -51,9 +51,17 @@ def evaluate_forecast(y_true: np.ndarray[Any, Any], y_pred: np.ndarray[Any, Any]
 
 def adf_stationarity(series: np.ndarray[Any, Any]) -> dict[str, float | bool]:
     """Augmented Dickey-Fuller test. Returns p-value and stationarity decision."""
+    import warnings
+
     from statsmodels.tsa.stattools import adfuller
 
-    result = adfuller(series, autolag="AIC", result_object=False)
+    # statsmodels >=0.15 warns that the plain-tuple return will change to an
+    # ADFullerResult object in 0.16+; result_object=False isn't available on the
+    # <0.15 versions this package also supports (statsmodels 0.15 itself requires
+    # Python >=3.10), so suppress the warning instead of passing the new kwarg.
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", category=FutureWarning)
+        result = adfuller(series, autolag="AIC")
     return {
         "adf_stat": float(result[0]),
         "p_value": float(result[1]),

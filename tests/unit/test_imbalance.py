@@ -17,7 +17,7 @@ def test_smote_oversample_balances_minority_class():
 
     X_res, y_res = smote_oversample(X, y)
 
-    counts = dict(zip(*np.unique(y_res, return_counts=True), strict=True))
+    counts = dict(zip(*np.unique(y_res, return_counts=True)))
     assert counts[0] == counts[1] == 50
     assert X_res.shape[0] == len(y_res)
 
@@ -27,6 +27,6 @@ def test_random_undersample_balances_majority_class():
 
     X_res, y_res = random_undersample(X, y)
 
-    counts = dict(zip(*np.unique(y_res, return_counts=True), strict=True))
+    counts = dict(zip(*np.unique(y_res, return_counts=True)))
     assert counts[0] == counts[1] == 10
     assert X_res.shape[0] == len(y_res)

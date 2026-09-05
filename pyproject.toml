@@ -7,12 +7,13 @@ name = "meerax"
 dynamic = ["version"]
 description = "Shared ML utilities — LLM providers, evaluation metrics, visualization, and report generation for Sameer Maurya's projects and organization."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "Sameer Maurya" }]
 keywords = ["machine-learning", "llm", "evaluation", "visualization"]
 classifiers = [
+    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -59,7 +60,7 @@ where = ["."]
 include = ["meerax*"]
 
 [tool.ruff]
-target-version = "py310"
+target-version = "py39"
 line-length = 120
 
 [tool.ruff.lint]
@@ -68,7 +69,10 @@ select = ["E", "W", "F", "I", "UP", "B", "PIE", "PLC"]
 # deliberate pattern for avoiding eager loading of heavy/conflicting ML dependencies
 # (torch, tensorflow, anthropic, openai, ollama, sklearn, statsmodels, nltk, imblearn) -
 # see meerax/vision/gridplot.py's docstring for the torch/TensorFlow segfault this avoids.
-ignore = ["E501", "B008", "PIE790", "PLC0415"]
+# B905 (zip without strict=) is disabled project-wide: requires-python is >=3.9, and the
+# strict= keyword to zip() doesn't exist before Python 3.10 - every zip() call here pairs
+# iterables of statically-guaranteed-equal length anyway (constructed together just above).
+ignore = ["E501", "B008", "PIE790", "PLC0415", "B905"]
 
 [tool.ruff.lint.per-file-ignores]
 "benchmarks/*" = ["T201"]
