@@ -64,7 +64,7 @@ class OpenAIProvider(LLMProvider):
         }
         if "temperature" in kwargs:
             params["temperature"] = kwargs["temperature"]
-        response = self._client.chat.completions.create(**params)  # type: ignore[arg-type]
+        response = self._client.chat.completions.create(**params)
         choice = response.choices[0]
         usage = response.usage
         return LLMResponse(
