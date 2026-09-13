@@ -39,3 +39,27 @@ def test_generate_with_images_sends_image_url_blocks(monkeypatch, mocker):
     assert content[1]["type"] == "image_url"
     assert content[1]["image_url"]["url"].startswith("data:image/png;base64,")
     assert result.content == "a description"
+
+
+def test_generate_forwards_temperature_when_specified(monkeypatch, mocker):
+    monkeypatch.setenv("OPENAI_API_KEY", "fake-key")
+    mock_client = mocker.patch("openai.OpenAI").return_value
+    mock_client.chat.completions.create.return_value = _mock_response(mocker, "hello", "gpt-4o-mini", 10, 5)
+
+    provider = OpenAIProvider()
+    provider.generate("hi there", temperature=0.0)
+
+    call_kwargs = mock_client.chat.completions.create.call_args.kwargs
+    assert call_kwargs["temperature"] == 0.0
+
+
+def test_generate_omits_temperature_when_not_specified(monkeypatch, mocker):
+    monkeypatch.setenv("OPENAI_API_KEY", "fake-key")
+    mock_client = mocker.patch("openai.OpenAI").return_value
+    mock_client.chat.completions.create.return_value = _mock_response(mocker, "hello", "gpt-4o-mini", 10, 5)
+
+    provider = OpenAIProvider()
+    provider.generate("hi there")
+
+    call_kwargs = mock_client.chat.completions.create.call_args.kwargs
+    assert "temperature" not in call_kwargs

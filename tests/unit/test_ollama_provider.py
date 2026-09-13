@@ -34,3 +34,33 @@ def test_generate_with_images_attaches_images_key(mocker):
     assert message["content"] == "what is this"
     assert isinstance(message["images"][0], str)
     assert result.content == "a cat"
+
+
+def test_generate_forwards_temperature_when_specified(mocker):
+    provider = OllamaProvider()
+    provider._ollama = mocker.MagicMock()
+    provider._ollama.chat.return_value = {
+        "message": {"content": "hi"},
+        "prompt_eval_count": 3,
+        "eval_count": 2,
+    }
+
+    provider.generate("hello", temperature=0.0)
+
+    call_kwargs = provider._ollama.chat.call_args.kwargs
+    assert call_kwargs["options"] == {"temperature": 0.0}
+
+
+def test_generate_omits_options_when_temperature_not_specified(mocker):
+    provider = OllamaProvider()
+    provider._ollama = mocker.MagicMock()
+    provider._ollama.chat.return_value = {
+        "message": {"content": "hi"},
+        "prompt_eval_count": 3,
+        "eval_count": 2,
+    }
+
+    provider.generate("hello")
+
+    call_kwargs = provider._ollama.chat.call_args.kwargs
+    assert call_kwargs["options"] is None
