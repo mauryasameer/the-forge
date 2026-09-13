@@ -1,6 +1,6 @@
 # meerax
 
-![Version](https://img.shields.io/badge/version-1.10.0-c8a96e)
+![Version](https://img.shields.io/badge/version-1.10.1-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.9%2B-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 

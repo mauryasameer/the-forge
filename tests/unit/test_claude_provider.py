@@ -40,3 +40,27 @@ def test_generate_with_images_sends_content_blocks(monkeypatch, mocker):
     assert content[0]["source"]["media_type"] == "image/png"
     assert content[1] == {"type": "text", "text": "describe this"}
     assert result.content == "a description"
+
+
+def test_generate_forwards_temperature_when_specified(monkeypatch, mocker):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "fake-key")
+    mock_client = mocker.patch("anthropic.Anthropic").return_value
+    mock_client.messages.create.return_value = _mock_response(mocker, "hello", "claude-sonnet-4-6", 10, 5)
+
+    provider = ClaudeProvider()
+    provider.generate("hi there", temperature=0.0)
+
+    call_kwargs = mock_client.messages.create.call_args.kwargs
+    assert call_kwargs["temperature"] == 0.0
+
+
+def test_generate_omits_temperature_when_not_specified(monkeypatch, mocker):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "fake-key")
+    mock_client = mocker.patch("anthropic.Anthropic").return_value
+    mock_client.messages.create.return_value = _mock_response(mocker, "hello", "claude-sonnet-4-6", 10, 5)
+
+    provider = ClaudeProvider()
+    provider.generate("hi there")
+
+    call_kwargs = mock_client.messages.create.call_args.kwargs
+    assert "temperature" not in call_kwargs

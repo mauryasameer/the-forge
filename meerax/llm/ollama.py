@@ -43,9 +43,13 @@ class OllamaProvider(LLMProvider):
     ) -> LLMResponse:
         if system and not any(m["role"] == "system" for m in messages):
             messages = [{"role": "system", "content": system}, *messages]
+        options: dict[str, Any] = {}
+        if "temperature" in kwargs:
+            options["temperature"] = kwargs["temperature"]
         response = self._ollama.chat(
             model=kwargs.get("model", self._model),
             messages=messages,
+            options=options or None,
         )
         msg = response["message"]
         return LLMResponse(
