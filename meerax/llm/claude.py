@@ -64,6 +64,8 @@ class ClaudeProvider(LLMProvider):
         }
         if system:
             params["system"] = system
+        if "temperature" in kwargs:
+            params["temperature"] = kwargs["temperature"]
         response = self._client.messages.create(**params)
         return LLMResponse(
             content=response.content[0].text,

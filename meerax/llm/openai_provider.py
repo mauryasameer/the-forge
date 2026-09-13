@@ -57,11 +57,14 @@ class OpenAIProvider(LLMProvider):
     ) -> LLMResponse:
         if system and not any(m["role"] == "system" for m in messages):
             messages = [{"role": "system", "content": system}, *messages]
-        response = self._client.chat.completions.create(
-            model=kwargs.get("model", self._model),
-            max_tokens=kwargs.get("max_tokens", self._max_tokens),
-            messages=messages,  # type: ignore[arg-type]
-        )
+        params: dict[str, Any] = {
+            "model": kwargs.get("model", self._model),
+            "max_tokens": kwargs.get("max_tokens", self._max_tokens),
+            "messages": messages,
+        }
+        if "temperature" in kwargs:
+            params["temperature"] = kwargs["temperature"]
+        response = self._client.chat.completions.create(**params)
         choice = response.choices[0]
         usage = response.usage
         return LLMResponse(
