@@ -1,6 +1,6 @@
 # meerax
 
-![Version](https://img.shields.io/badge/version-1.10.1-c8a96e)
+![Version](https://img.shields.io/badge/version-1.10.2-c8a96e)
 ![Python](https://img.shields.io/badge/python-3.9%2B-00e5cc)
 ![License](https://img.shields.io/badge/license-MIT-informational)
 
@@ -26,7 +26,7 @@ pip install meerax
 Or pin in `requirements.txt`:
 
 ```
-meerax==1.10.0
+meerax==1.10.2
 ```
 
 ## Modules
@@ -100,6 +100,23 @@ meerax bump 1.2.0
 
 It doesn't write CHANGELOG content or a compare-link footer — those need someone who actually
 knows what changed.
+
+## Docker
+
+meerax is a library and scaffolding CLI, not a batch pipeline — the image runs the `meerax`
+command directly, mounting your current directory as `/workspace` so scaffolded projects land on
+the host:
+
+```bash
+docker compose build
+docker compose run --rm meerax new my-project
+docker compose run --rm meerax doctor
+```
+
+The container writes files as its own `meerax` user; if that leaves generated files owned by a
+different UID than your host user, add `-u "$(id -u):$(id -g)"` to the `docker compose run`
+invocation. No `.env`/secrets are needed — the CLI's `new`/`init`/`doctor`/`bump` subcommands
+don't read any environment variables.
 
 ## Quick Start
 
@@ -192,6 +209,8 @@ the-forge/
 ├── LICENSE
 ├── pyproject.toml
 ├── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
 └── VERSION
 ```
 
