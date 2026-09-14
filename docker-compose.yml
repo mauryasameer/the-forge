@@ -1,0 +1,5 @@
+services:
+  meerax:
+    build: .
+    volumes:
+      - .:/workspace
