@@ -3,6 +3,10 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.10.2] - 2026-09-14
+### Added
+- `Dockerfile`/`docker-compose.yml` for the `meerax` CLI itself, per the standing containerization rule — `docker compose run --rm meerax new my-project` scaffolds a project without installing Python locally, mounting the working directory so generated files land on the host. Guarded `docker compose config` validation added to the shared `reusable-ci.yml` (consumed by every downstream project) and to this repo's own `_checks.yml`, skipping cleanly for any repo without a `docker-compose.yml` yet.
+
 ## [1.10.1] - 2026-09-13
 ### Fixed
 - `OllamaProvider`, `ClaudeProvider`, and `OpenAIProvider` silently dropped a caller-specified `temperature` kwarg — only `model`/`max_tokens` were ever read out of `**kwargs`. Any caller relying on `temperature=0.0` for reproducible, audit-sensitive output (e.g. a narrative-generation service logging results) got non-deterministic default sampling instead, with no error or warning. Now forwarded to the real API call whenever the caller specifies it; unspecified calls keep each backend's own default behavior unchanged.

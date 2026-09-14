@@ -53,3 +53,16 @@ jobs:
         run: pytest tests/unit/ --cov=meerax --cov-report=term-missing -v --tb=short
       - name: Run integration tests
         run: pytest tests/integration/ -v --tb=short
+
+  docker:
+    name: Docker (compose config)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Validate docker-compose.yml
+        run: |
+          if [ -f docker-compose.yml ]; then
+            docker compose config
+          else
+            echo "no docker-compose.yml in this repo, skipping"
+          fi
