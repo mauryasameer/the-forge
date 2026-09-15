@@ -1,8 +1,9 @@
 # meerax
 
-![Version](https://img.shields.io/badge/version-1.10.2-c8a96e)
-![Python](https://img.shields.io/badge/python-3.9%2B-00e5cc)
-![License](https://img.shields.io/badge/license-MIT-informational)
+[![Version](https://img.shields.io/badge/version-1.10.2-c8a96e)](CHANGELOG.md)
+[![CI](https://github.com/mauryasameer/the-forge/actions/workflows/ci.yml/badge.svg)](https://github.com/mauryasameer/the-forge/actions)
+[![Python](https://img.shields.io/badge/python-3.9%2B-00e5cc)](https://www.python.org)
+[![License](https://img.shields.io/badge/license-MIT-informational)](LICENSE)
 
 Shared ML utilities — LLM providers, evaluation metrics, visualization, and report generation.
 Used as an in-house dependency across all of Sameer Maurya's ML projects and organization.
