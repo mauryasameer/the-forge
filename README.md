@@ -1,6 +1,6 @@
 # meerax
 
-[![Version](https://img.shields.io/badge/version-1.10.2-c8a96e)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.10.3-c8a96e)](CHANGELOG.md)
 [![CI](https://github.com/mauryasameer/the-forge/actions/workflows/ci.yml/badge.svg)](https://github.com/mauryasameer/the-forge/actions)
 [![Python](https://img.shields.io/badge/python-3.9%2B-00e5cc)](https://www.python.org)
 [![License](https://img.shields.io/badge/license-MIT-informational)](LICENSE)
@@ -27,7 +27,7 @@ pip install meerax
 Or pin in `requirements.txt`:
 
 ```
-meerax==1.10.2
+meerax==1.10.3
 ```
 
 ## Modules
@@ -38,6 +38,7 @@ meerax==1.10.2
 | `meerax.eval.classification` | F1, AUC-ROC, precision, recall in one call |
 | `meerax.eval.timeseries` | RMSE, MAPE, SMAPE, ADF stationarity test |
 | `meerax.eval.text` | BLEU-4, ROUGE-L for caption / summary quality |
+| `meerax.eval.recommender` | Precision@K, MAP@K for ranked recommendation lists |
 | `meerax.viz` | Dark-themed matplotlib plots (confusion matrix, ROC, forecast, decomposition) |
 | `meerax.data` | CSV/parquet loaders with schema validation, stratified + time splits, SMOTE |
 | `meerax.report` | Self-contained dark-themed HTML model-card report builder |
