@@ -3,6 +3,10 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.10.3] - 2026-09-15
+### Added
+- `meerax.eval.recommender` — Precision@K and MAP@K metrics for evaluating ranked recommendation lists across multiple users, prerequisite for NewsCompass.
+
 ## [1.10.2] - 2026-09-14
 ### Added
 - `Dockerfile`/`docker-compose.yml` for the `meerax` CLI itself, per the standing containerization rule — `docker compose run --rm meerax new my-project` scaffolds a project without installing Python locally, mounting the working directory so generated files land on the host. Guarded `docker compose config` validation added to the shared `reusable-ci.yml` (consumed by every downstream project) and to this repo's own `_checks.yml`, skipping cleanly for any repo without a `docker-compose.yml` yet.
