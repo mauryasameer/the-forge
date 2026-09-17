@@ -5,6 +5,8 @@
 [![Python](https://img.shields.io/badge/python-3.9%2B-00e5cc)](https://www.python.org)
 [![License](https://img.shields.io/badge/license-MIT-informational)](LICENSE)
 
+![Meerax machine-learning module ecosystem](./assets/meerax-hero.png)
+
 Shared ML utilities — LLM providers, evaluation metrics, visualization, and report generation.
 Used as an in-house dependency across all of Sameer Maurya's ML projects and organization.
 Source repo: [the-forge](https://github.com/mauryasameer/the-forge) — kept its original name;
