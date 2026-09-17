@@ -1,6 +1,6 @@
 # meerax
 
-[![Version](https://img.shields.io/badge/version-1.10.3-c8a96e)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.10.4-c8a96e)](CHANGELOG.md)
 [![CI](https://github.com/mauryasameer/the-forge/actions/workflows/ci.yml/badge.svg)](https://github.com/mauryasameer/the-forge/actions)
 [![Python](https://img.shields.io/badge/python-3.9%2B-00e5cc)](https://www.python.org)
 [![License](https://img.shields.io/badge/license-MIT-informational)](LICENSE)

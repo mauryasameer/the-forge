@@ -3,6 +3,10 @@
 All notable changes to this project will be documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.10.4] - 2026-09-17
+### Added
+- Repository hero artwork for the README and social-preview use.
+
 ## [1.10.3] - 2026-09-15
 ### Added
 - `meerax.eval.recommender` — Precision@K and MAP@K metrics for evaluating ranked recommendation lists across multiple users, prerequisite for NewsCompass.
@@ -272,3 +276,4 @@ This is Phase 2 of the ecosystem audit's roadmap — closing the gap where stand
 [0.2.1]: https://github.com/mauryasameer/the-forge/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/mauryasameer/the-forge/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/mauryasameer/the-forge/releases/tag/v0.1.0
+[1.10.4]: https://github.com/mauryasameer/the-forge/compare/v1.10.3...v1.10.4
