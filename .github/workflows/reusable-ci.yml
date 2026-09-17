@@ -21,7 +21,13 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt pytest==8.* pytest-cov
       - run: pytest tests/unit/ --cov=src --cov-report=term-missing -v --tb=short
-      - run: pytest tests/integration/ -v --tb=short
+      - name: Run integration tests (if any exist)
+        run: |
+          if find tests/integration -name 'test_*.py' -o -name '*_test.py' 2>/dev/null | grep -q .; then
+            pytest tests/integration/ -v --tb=short
+          else
+            echo "no integration tests yet in tests/integration/, skipping"
+          fi
       - run: meerax doctor
 
   lint:
