@@ -5,11 +5,12 @@
 [![Python](https://img.shields.io/badge/python-3.9%2B-00e5cc)](https://www.python.org)
 [![License](https://img.shields.io/badge/license-MIT-informational)](LICENSE)
 
-<video src="./assets/meerax-launch.mp4" controls muted playsinline poster="./assets/meerax-hero.png">
-  Real footage: <code>pip install meerax</code>, <code>meerax new</code>, <code>meerax doctor</code>,
-  and a model report genuinely generated through meerax's own eval → viz → report pipeline.
-  <a href="./assets/meerax-launch.mp4">Watch it directly</a> if your viewer doesn't render inline video.
-</video>
+[![Meerax machine-learning module ecosystem](./assets/meerax-hero.png)](https://github.com/mauryasameer/the-forge/blob/main/assets/meerax-launch.mp4)
+
+▶ [Watch the 22s launch video](https://github.com/mauryasameer/the-forge/blob/main/assets/meerax-launch.mp4) —
+real `pip install meerax` / `meerax new` / `meerax doctor` output, and a model report genuinely
+generated through meerax's own eval → viz → report pipeline. (GitHub strips inline `<video>` from
+rendered READMEs, so the image above links out to GitHub's own player on the file instead.)
 
 Shared ML utilities — LLM providers, evaluation metrics, visualization, and report generation.
 Used as an in-house dependency across all of Sameer Maurya's ML projects and organization.
