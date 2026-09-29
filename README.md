@@ -5,12 +5,14 @@
 [![Python](https://img.shields.io/badge/python-3.9%2B-00e5cc)](https://www.python.org)
 [![License](https://img.shields.io/badge/license-MIT-informational)](LICENSE)
 
-[![Meerax machine-learning module ecosystem](./assets/meerax-hero.png)](https://github.com/mauryasameer/the-forge/blob/main/assets/meerax-launch.mp4)
+[![Meerax machine-learning module ecosystem](./assets/meerax-hero.png)](https://www.mauryasameer.com/meerax)
 
-▶ [Watch the 22s launch video](https://github.com/mauryasameer/the-forge/blob/main/assets/meerax-launch.mp4) —
-real `pip install meerax` / `meerax new` / `meerax doctor` output, and a model report genuinely
-generated through meerax's own eval → viz → report pipeline. (GitHub strips inline `<video>` from
-rendered READMEs, so the image above links out to GitHub's own player on the file instead.)
+▶ [Watch the 22s launch video](https://www.mauryasameer.com/meerax) — real `pip install meerax` /
+`meerax new` / `meerax doctor` output, and a model report genuinely generated through meerax's own
+eval → viz → report pipeline. (GitHub doesn't render inline video for a committed file at all —
+not in the README, not on the file's own blob page, confirmed against files as small as 2KB — so
+the image above links to the live page where it actually plays. `assets/meerax-launch.mp4` is
+still in the repo for anyone who wants the raw file.)
 
 Shared ML utilities — LLM providers, evaluation metrics, visualization, and report generation.
 Used as an in-house dependency across all of Sameer Maurya's ML projects and organization.
