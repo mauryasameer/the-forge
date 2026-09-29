@@ -38,6 +38,11 @@ models/
 # Reports output
 reports/
 
+# /brag-slim working directory -- frames, synth scripts, stills. The
+# finished video and poster get copied into assets/ and committed there;
+# this directory is only ever local scratch.
+brag-output/
+
 # IDE
 .idea/
 .vscode/
