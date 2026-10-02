@@ -7,7 +7,7 @@ scikit-learn==1.9.0
 # LLM providers (install what you need)
 anthropic==1.2.0
 openai==3.6.0
-ollama==0.6.2
+ollama==0.6.3
 
 # Stats / time-series
 statsmodels==0.15.0
